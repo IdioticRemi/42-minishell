@@ -1,0 +1,1 @@
+command test exemple : sh exe.sh && ./a.out '      echo | ls --ggf --djf |sort echo --gg'
