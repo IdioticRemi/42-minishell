@@ -42,7 +42,7 @@ int count_arg(char *b_cmd)
 	i = 0;
 	while (b_cmd[i])
 	{
-		if (b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
+		if (i > 0 && b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
 		{
 			count++;
 			i++;
@@ -90,7 +90,7 @@ char **conv_args(char *b_cmd)
 		return (NULL);
 	while (b_cmd[i])
 	{
-		if (b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
+		if (i > 0 && b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
 		{
 			start = i;
 			while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
