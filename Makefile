@@ -19,6 +19,7 @@ CC		= clang
 
 CFLAGS	= -Wall -Werror -Wextra -O3 -g3 -fsanitize=address
 INCLUDE	= -I $(INC_DIR)
+LIBS	= -lreadline
 
 # Color
 
@@ -37,7 +38,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_DIR)/$(NAME).h
 
 $(NAME): $(OBJS)
 	@printf " [$(words $(OBJS))]\n"
-	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -o $(NAME) $(LIBS)
 	@printf "$(FG_WHIT)[ MINISHELL ] $(FG_GREE)Built '$(NAME)'.$(FG_WHIT)\n"
 
 log:

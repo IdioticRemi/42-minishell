@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/03 11:29:57 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/03 14:48:27 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <readline/readline.h>
 
 typedef struct s_shell {
 	int	stdin;
