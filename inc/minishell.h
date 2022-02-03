@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/01 16:24:24 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:29:57 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 typedef struct s_shell {
 	int	stdin;
 	int	stdout;
+	int	stderr;
 }	t_shell;
 
 typedef struct s_cmd {
@@ -37,6 +38,10 @@ typedef struct s_cmd {
 // Execution
 
 int		ft_exec(t_shell *shell, t_cmd *cmd, char **env);
+
+pid_t	ft_exec_single(t_shell *shell, t_cmd *cmd, char **env);
+pid_t	ft_exec_pipe(t_shell *shell, t_cmd *cmd, char **env);
+pid_t	ft_exec_heredoc(t_cmd *cmd);
 void	ft_exec_dup(t_cmd *cmd);
 
 // Cmd struct utils

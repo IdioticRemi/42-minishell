@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:23:27 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/01 16:24:14 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/03 11:17:24 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exec_dup(t_cmd *cmd)
 	int	in;
 	int	out;
 
-	if (cmd->in)
+	if (cmd->in && !cmd->heredoc)
 	{
 		in = open(cmd->in, O_RDONLY, 0777);
 		if (in < 0)
