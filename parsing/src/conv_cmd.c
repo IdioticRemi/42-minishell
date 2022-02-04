@@ -40,7 +40,7 @@ int count_arg(char *b_cmd)
 
 	count = 0;
 	i = 0;
-	while (b_cmd[i])
+	while (b_cmd[i] && b_cmd[i] != '<' && b_cmd[i] != '>')
 	{
 		if (i > 0 && b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
 		{
@@ -52,7 +52,7 @@ int count_arg(char *b_cmd)
 			if (b_cmd[i + 1] && b_cmd[i + 1] == '-')
 			{
 				i += 2;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
+				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n' && b_cmd[i] != '<' && b_cmd[i] != '>'))
 					i++;
 				count++;
 			}
@@ -60,7 +60,7 @@ int count_arg(char *b_cmd)
 			{
 				i++;
 				temp = count;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
+				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n' && b_cmd[i] != '<' && b_cmd[i] != '>'))
 				{
 					i++;
 					count++;
@@ -83,17 +83,17 @@ char **conv_args(char *b_cmd)
 	int start;
 	char *temp;
 
-	y = 0;
+	y = 1;
 	i = 0;
-	args = malloc(sizeof(char *) * (count_arg(b_cmd) + 1));
+	args = malloc(sizeof(char *) * (count_arg(b_cmd) + 2));
 	if (args == NULL)
 		return (NULL);
-	while (b_cmd[i])
+	while (b_cmd[i] && b_cmd[i] != '<' && b_cmd[i] != '>')
 	{
 		if (i > 0 && b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
 		{
 			start = i;
-			while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
+			while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n' && b_cmd[i] != '<' && b_cmd[i] != '>'))
 				i++;
 			args[y] = ft_substr(b_cmd, start, i - start);
 			y++;
@@ -103,7 +103,7 @@ char **conv_args(char *b_cmd)
 			if (b_cmd[i + 1] && b_cmd[i + 1] == '-')
 			{
 				start = i;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
+				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n' && b_cmd[i] != '<' && b_cmd[i] != '>'))
 					i++;
 				args[y] = ft_substr(b_cmd, start, i - start);
 				y++;
@@ -111,7 +111,7 @@ char **conv_args(char *b_cmd)
 			else
 			{
 				i++;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
+				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n' && b_cmd[i] != '<' && b_cmd[i] != '>'))
 				{
 					temp = ft_substr(b_cmd, i, 1);
 					args[y] = ft_strjoin("-", temp);

@@ -1,11 +1,12 @@
 # include <stdlib.h>
 # include <stdio.h>
+ #include <fcntl.h>
+#include <unistd.h>
 
 typedef struct s_cmd {
   char		*in;
   char		*out;
   int		append; // (0 = non symbole: ">" ou rien, 1 = oui symbole: ">>")
-  char		*v_cmd;
   char		**args;
   struct s_cmd		*next;
 }  t_cmd;
@@ -27,3 +28,6 @@ int free_all(char **str);
 char *cancel_bonus(char *str);
 void	*ft_memmove( void *destination, const void *source, size_t size);
 char **conv_args(char *b_cmd);
+
+void for_re(char *cmd, t_cmd *stru);
+void for_rre(char *cmd, t_cmd *stru);

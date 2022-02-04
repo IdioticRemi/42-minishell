@@ -52,8 +52,10 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	default_cmd(next);
 	cmd_true = skipSpasce(ft_strdup(cmd_b));
 	free(cmd_b);
-	cmd->v_cmd = get_first(cmd_true);
 	cmd->args = conv_args(cmd_true);
+	cmd->args[0] = get_first(cmd_true);
+	for_re(cmd_true, cmd);
+	for_rre(cmd_true, cmd);
 	free(cmd_true);
 	cmd->next = next;
 }

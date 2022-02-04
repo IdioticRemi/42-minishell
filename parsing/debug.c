@@ -13,7 +13,6 @@ void debug(t_cmd *cmd)
 		printf("========= %d ==========\n", y);
 		printf("in : %s\n", cmd->in);
 		printf("out : %s\n", cmd->out);
-		printf("cmd : %s\n", cmd->v_cmd);
 		if (cmd->args && cmd->args[0])
 			while (cmd->args[++i])
 				printf("args : %s\n", cmd->args[i]);
