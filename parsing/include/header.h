@@ -29,5 +29,5 @@ char *cancel_bonus(char *str);
 void	*ft_memmove( void *destination, const void *source, size_t size);
 char **conv_args(char *b_cmd);
 
-void for_re(char *cmd, t_cmd *stru);
-void for_rre(char *cmd, t_cmd *stru);
+int for_re(char *cmd, t_cmd *stru);
+int for_rre(char *cmd, t_cmd *stru);

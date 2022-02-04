@@ -17,7 +17,7 @@ char *get_next(char *cmd, int index)
 }
 
 
-void for_re(char *cmd, t_cmd *stru)
+int for_re(char *cmd, t_cmd *stru)
 {
     int i;
     char *path;
@@ -30,7 +30,7 @@ void for_re(char *cmd, t_cmd *stru)
     i = 0;
     while (cmd[i])
     {
-        if (open > 0)
+        if (is_open > 0)
             close(is_open);
         if (cmd[i] == '>')
         {
@@ -53,9 +53,10 @@ void for_re(char *cmd, t_cmd *stru)
     }
     stru->append = mode;
     stru->out = path;
+    return (mode);
 }
 
-void for_rre(char *cmd, t_cmd *stru)
+int for_rre(char *cmd, t_cmd *stru)
 {
     int i;
     char *path;
@@ -68,7 +69,7 @@ void for_rre(char *cmd, t_cmd *stru)
     i = 0;
     while (cmd[i])
     {
-        if (open > 0)
+        if (is_open > 0)
             close(is_open);
         if (cmd[i] == '<')
         {
@@ -91,4 +92,5 @@ void for_rre(char *cmd, t_cmd *stru)
     }
     stru->append = mode;
     stru->in = path;
+    return (mode);
 }
