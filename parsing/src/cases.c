@@ -52,10 +52,11 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	default_cmd(next);
 	cmd_true = skipSpasce(ft_strdup(cmd_b));
 	free(cmd_b);
-	cmd->args = conv_args(cmd_true);
-	cmd->args[0] = get_first(cmd_true);
 	if (for_re(cmd_true, cmd) == -1)
 		for_rre(cmd_true, cmd);
+	cmd_true = conv_redir(cmd_true);
+	cmd->args = conv_args(cmd_true);
+	cmd->args[0] = get_first(cmd_true);
 	free(cmd_true);
 	cmd->next = next;
 }

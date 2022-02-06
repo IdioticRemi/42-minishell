@@ -1,5 +1,50 @@
 # include "../include/header.h"
 
+
+char *conv_redir(char *cmd)
+{
+    int i;
+    char *new;
+    char *start;
+    char *end;
+    char *temp;
+
+    i = 0;
+    new = ft_strdup(cmd);
+    free(cmd);
+    while (new[i])
+    {
+        if (new[i] == '>' || new[i] == '<')
+        {
+            start = ft_substr(new, 0, i);
+            if (new[i + 1] && (new[i + 1] == '>' || new[i + 1] == '<'))
+                i++;
+            if (new[i + 1] && new[i + 1] != ' ')
+            {
+                temp = ft_strjoin(start, " ");
+                free(start);
+                start = temp;
+            }
+            while (new[i] == '>' || new[i] == '<' || new[i] == ' ')
+                i++;
+            while (new[i] != ' ')
+                i++;
+            while (new[i] == ' ')
+                i++;
+            end = ft_substr(new, i, ft_strlen(new + i));
+            free(new);
+            new = ft_strjoin(start, end);
+            free(start);
+            start = NULL;
+            free(end);
+            end = NULL;
+            i = 0;
+        }
+        i++;
+    }
+    return (new);
+}
+
 char *get_next(char *cmd, int index)
 {
     int i;

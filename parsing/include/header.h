@@ -31,3 +31,4 @@ char **conv_args(char *b_cmd);
 
 int for_re(char *cmd, t_cmd *stru);
 int for_rre(char *cmd, t_cmd *stru);
+char *conv_redir(char *cmd);
