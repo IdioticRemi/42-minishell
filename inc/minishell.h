@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/03 14:48:27 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:10:26 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,25 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
+# include <readline/history.h>
+# include <signal.h>
+
+typedef struct s_env
+{		
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_shell {
-	int	stdin;
-	int	stdout;
-	int	stderr;
+	int		stdin;
+	int		stdout;
+	int		stderr;
+	int		status;
+
+	int		pid_count;
+	int		*pids;
+	t_env	*env;
 }	t_shell;
 
 typedef struct s_cmd {
@@ -36,12 +50,22 @@ typedef struct s_cmd {
 	struct s_cmd	*next;
 }	t_cmd;
 
+t_shell	*g_shell;
+
+// Checks
+
+void	ft_check(char *line);
+
+void	ft_check_quotes(char *line);
+void	ft_check_redir(char *line);
+void	ft_check_pipe(char *line);
+
 // Execution
 
-int		ft_exec(t_shell *shell, t_cmd *cmd, char **env);
+void	ft_exec(t_cmd *cmd, char **env);
 
-pid_t	ft_exec_single(t_shell *shell, t_cmd *cmd, char **env);
-pid_t	ft_exec_pipe(t_shell *shell, t_cmd *cmd, char **env);
+pid_t	ft_exec_single(t_cmd *cmd, char **env);
+pid_t	ft_exec_pipe(t_cmd *cmd, char **env);
 pid_t	ft_exec_heredoc(t_cmd *cmd);
 void	ft_exec_dup(t_cmd *cmd);
 
@@ -69,6 +93,7 @@ char	*ft_strdup(char *src);
 int		ft_strncmp(char *s1, char *s2, size_t n);
 size_t	ft_strlcpy(char *dst, char *src, size_t n);
 char	**ft_split(char *s, char c);
+int		ft_chrcnt(char *str, char c);
 
 // Path utils
 

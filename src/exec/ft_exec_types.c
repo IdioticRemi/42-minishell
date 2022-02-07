@@ -6,13 +6,13 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:54:32 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/03 11:34:05 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/07 13:38:04 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_exec_cmd(t_shell *shell, t_cmd *cmd, char **env)
+static void	ft_exec_cmd(t_cmd *cmd, char **env)
 {
 	char	*path;
 
@@ -23,11 +23,11 @@ static void	ft_exec_cmd(t_shell *shell, t_cmd *cmd, char **env)
 	execve(path, cmd->argv, env);
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 	printf("Command '%s' not found.\n", cmd->argv[0]);
-	dup2(shell->stdout, STDOUT_FILENO);
+	dup2(g_shell->stdout, STDOUT_FILENO);
 	exit(1);
 }
 
-pid_t	ft_exec_single(t_shell *shell, t_cmd *cmd, char **env)
+pid_t	ft_exec_single(t_cmd *cmd, char **env)
 {
 	pid_t	pid;
 
@@ -37,11 +37,11 @@ pid_t	ft_exec_single(t_shell *shell, t_cmd *cmd, char **env)
 	if (pid)
 		return (pid);
 	ft_exec_dup(cmd);
-	ft_exec_cmd(shell, cmd, env);
+	ft_exec_cmd(cmd, env);
 	return (pid);
 }
 
-pid_t	ft_exec_pipe(t_shell *shell, t_cmd *cmd, char **env)
+pid_t	ft_exec_pipe(t_cmd *cmd, char **env)
 {
 	pid_t	pid;
 	int		files[2];
@@ -62,7 +62,7 @@ pid_t	ft_exec_pipe(t_shell *shell, t_cmd *cmd, char **env)
 	close(files[0]);
 	close(files[1]);
 	ft_exec_dup(cmd);
-	ft_exec_cmd(shell, cmd, env);
+	ft_exec_cmd(cmd, env);
 	return (pid);
 }
 
