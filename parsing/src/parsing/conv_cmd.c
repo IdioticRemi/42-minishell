@@ -1,4 +1,5 @@
-# include "../include/header.h"
+# include "../../include/header.h"
+
 
 char *cancel_bonus(char *str)
 {

@@ -1,4 +1,5 @@
-#include "../include/header.h"
+# include "../../include/header.h"
+
 
 void default_cmd(t_cmd *cmd)
 {

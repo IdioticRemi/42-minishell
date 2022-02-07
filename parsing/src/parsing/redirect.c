@@ -1,5 +1,4 @@
-# include "../include/header.h"
-
+# include "../../include/header.h"
 
 char *conv_redir(char *cmd)
 {

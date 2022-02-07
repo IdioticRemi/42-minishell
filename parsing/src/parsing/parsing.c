@@ -1,4 +1,5 @@
-# include "../include/header.h"
+# include "../../include/header.h"
+
 
 char *convert_brut(char **av)
 {
@@ -32,6 +33,5 @@ int main(int ac, char **av)
 	t_cmd cmd = parsing(ac, av);
 
 	debug(&cmd);
-
 	return (0);
 }

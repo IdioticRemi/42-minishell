@@ -1,4 +1,5 @@
-# include "../include/header.h"
+# include "../../include/header.h"
+
 
 int free_all(char **str)
 {

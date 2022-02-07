@@ -1,4 +1,5 @@
-# include "include/header.h"
+# include "../../include/header.h"
+
 
 void debug(t_cmd *cmd)
 {

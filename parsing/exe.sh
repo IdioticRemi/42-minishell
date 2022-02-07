@@ -1,1 +1,1 @@
-gcc *.c utils/*.c src/*.c
+gcc utils/*.c src/*/*.c
