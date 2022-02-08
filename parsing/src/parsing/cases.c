@@ -75,16 +75,3 @@ void throw_cases(char *cmd_b, t_cmd *cmd)
 		i++;
 	}
 }
-
-void part1_cases(char *cmd_b, t_cmd *cmd)
-{
-	int i;
-
-	i = 0;
-	while (cmd_b[i])
-	{
-		if (cmd_b[i] == ';')
-			NULL;
-		i++;
-	}
-}

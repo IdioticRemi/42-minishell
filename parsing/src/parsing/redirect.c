@@ -33,10 +33,8 @@ char *conv_redir(char *cmd)
             end = ft_substr(new, i, ft_strlen(new + i));
             free(new);
             new = ft_strjoin(start, end);
-            free(start);
-            start = NULL;
-            free(end);
-            end = NULL;
+            corr_free(start);
+            corr_free(end);
             i = 0;
         }
         i++;

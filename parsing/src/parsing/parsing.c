@@ -22,16 +22,16 @@ t_cmd parsing(int ac, char **av)
 	char *brut_cmd;
 
 	default_cmd(&cmd);
-	brut_cmd = cancel_bonus(convert_brut(av));
+	brut_cmd = convert_brut(av);
 	throw_cases(brut_cmd, &cmd);
 	return (cmd);
 }
 
-int main(int ac, char **av)
-{
+// int main(int ac, char **av)
+// {
 
-	t_cmd cmd = parsing(ac, av);
+// 	t_cmd cmd = parsing(ac, av);
 
-	debug(&cmd);
-	return (0);
-}
+// 	debug(&cmd);
+// 	return (0);
+// }

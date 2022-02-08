@@ -1,38 +1,5 @@
 # include "../../include/header.h"
 
-
-char *cancel_bonus(char *str)
-{
-	int i;
-	char *p1;
-	char *p2;
-	char temp;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i + 1])
-		{
-			if ((str[i] == '|' && str[i + 1] == '|') || (str[i] == '&' && str[i + 1] == '&'))
-			{
-				str[i] = '\0';
-				p1 = ft_strdup(str);
-				p2 = ft_strdup(str + i + 2);
-				free(str);
-				str = ft_strjoin(p1, p2);
-				free(p1);
-				p1 = NULL;
-				free(p2);
-				p2 = NULL;
-			}	
-		}
-		i++;
-	}
-	return (str);
-}
-
-
-
 int count_arg(char *b_cmd)
 {
 	int i;
@@ -83,7 +50,7 @@ char **conv_args(char *b_cmd)
 	int y;
 	int start;
 	char *temp;
-
+ 
 	y = 1;
 	i = 0;
 	args = malloc(sizeof(char *) * (count_arg(b_cmd) + 2));
@@ -116,8 +83,7 @@ char **conv_args(char *b_cmd)
 				{
 					temp = ft_substr(b_cmd, i, 1);
 					args[y] = ft_strjoin("-", temp);
-					free(temp);
-					temp = NULL;
+					corr_free(temp);
 					y++;
 					i++;
 				}
