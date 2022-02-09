@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 16:18:56 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:14:07 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int		for_rre(char *cmd, t_cmd *stru);
 void	throw_cases(char *cmd_b, t_cmd *cmd);
 char	*conv_redir(char *cmd);
 char	**conv_args(char *b_cmd);
+char 	*get_first(char *cmd_b, int nfree);
+char	*skipSpasce(char *cmd_b);
 
 // Execution
 

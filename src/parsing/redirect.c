@@ -6,11 +6,19 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:14:21 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 17:55:04 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:18:39 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int heredoc_c(char *end, t_cmd *stru, char *start)
+{
+    if (ft_strncmp(start, "cat", ft_strlen(start)) != 0)   
+        return (1);
+    //heredoc
+    return (0);
+}
 
 char *conv_redir(char *cmd)
 {
@@ -138,6 +146,11 @@ int for_rre(char *cmd, t_cmd *stru)
             {
                 mode = 2;
                 path = get_next(cmd, i + 1);
+                if (heredoc_c(path, stru, get_first(skipSpasce(ft_strdup(cmd)), 0)));
+                {
+                    i++;
+                    continue;
+                }
                 i++;
             }    
             else

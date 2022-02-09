@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:09:42 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 17:31:34 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/02/09 19:14:19 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ int white_spasce(char *str)
 	return (i);
 }
 
-char *get_first(char *cmd_b)
+char *get_first(char *cmd_b, int nfree)
 {
 	int i;
 	
 	i = 0;
 	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n')
 		i++;
+	if (nfree)
+		free(cmd_b);
 	return (ft_substr(cmd_b, 0, i));
 }
 
@@ -68,7 +70,7 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	{
 		cmd_true = conv_redir(cmd_true);
 		cmd->argv = conv_args(cmd_true);
-		cmd->argv[0] = get_first(cmd_true);
+		cmd->argv[0] = get_first(cmd_true, 1);
 	}
 	free(cmd_true);
 	cmd->next = NULL;
