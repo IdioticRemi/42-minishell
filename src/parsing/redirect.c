@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:14:21 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 17:25:22 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/02/09 17:55:04 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ int for_re(char *cmd, t_cmd *stru)
             }
             is_open = open(path, O_WRONLY | O_TRUNC | O_CREAT, 0777);
             if (is_open < 0)
+            {
+                write(2, path, ft_strlen(path));
+                ft_putstr_fd(" : Permisson denied\n", 2);
                 return (-1);
+            }
         }
         i++;
     }
@@ -143,7 +147,11 @@ int for_rre(char *cmd, t_cmd *stru)
             }
             is_open = open(path, O_RDONLY | O_CREAT, 0777);
             if (is_open < 0)
+            {
+                write(2, path, ft_strlen(path));
+                ft_putstr_fd(" : Permisson denied\n", 2);
                 return (-1);
+            }
         }
         i++;
     }
