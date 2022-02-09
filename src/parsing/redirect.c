@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:14:21 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:49:10 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 17:25:22 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char *conv_redir(char *cmd)
             end = ft_substr(new, i, ft_strlen(new + i));
             free(new);
             new = ft_strjoin(start, end);
-            free(start);
-            free(end);
+            corr_free(start);
+            corr_free(end);
             i = 0;
         }
         i++;
@@ -92,16 +92,18 @@ int for_re(char *cmd, t_cmd *stru)
             path = NULL;
             if (cmd[i + 1] && cmd[i + 1] == '>')
             {
-                mode = 1;
+                mode = 2;
                 path = get_next(cmd, i + 1);
                 i++;
             }    
             else
             {
-                mode = 0;
+                mode = 1;
                 path = get_next(cmd, i);
             }
             is_open = open(path, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+            if (is_open < 0)
+                return (-1);
         }
         i++;
     }
@@ -118,7 +120,7 @@ int for_rre(char *cmd, t_cmd *stru)
     int is_open;
 
     path = NULL;
-    mode = -1;
+    mode = 0;
     is_open = -1;
     i = 0;
     while (cmd[i])
@@ -127,8 +129,7 @@ int for_rre(char *cmd, t_cmd *stru)
             close(is_open);
         if (cmd[i] == '<')
         {
-            free(path);
-            path = NULL;
+            corr_free(path);
             if (cmd[i + 1] && cmd[i + 1] == '<')
             {
                 mode = 2;
@@ -140,7 +141,9 @@ int for_rre(char *cmd, t_cmd *stru)
                 mode = 1;
                 path = get_next(cmd, i);
             }
-            is_open = open(path, O_RDONLY | O_CREAT, 0777);;
+            is_open = open(path, O_RDONLY | O_CREAT, 0777);
+            if (is_open < 0)
+                return (-1);
         }
         i++;
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cases.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:09:42 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 16:09:22 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 17:31:34 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,20 @@ char *skipSpasce(char *cmd_b)
 void fill_cmd(char *cmd_b, t_cmd *cmd)
 {
 	char *cmd_true;
+	int err;
 
+	err = 0;
 	cmd_true = skipSpasce(ft_strdup(cmd_b));
 	free(cmd_b);
-	if (for_re(cmd_true, cmd) == -1)
-		for_rre(cmd_true, cmd);
-	cmd_true = conv_redir(cmd_true);
-	cmd->argv = conv_args(cmd_true);
-	cmd->argv[0] = get_first(cmd_true);
+	err = for_re(cmd_true, cmd);
+	if (err == 0)
+		err = for_rre(cmd_true, cmd);
+	if (err != -1)
+	{
+		cmd_true = conv_redir(cmd_true);
+		cmd->argv = conv_args(cmd_true);
+		cmd->argv[0] = get_first(cmd_true);
+	}
 	free(cmd_true);
 	cmd->next = NULL;
 }
