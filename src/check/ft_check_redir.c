@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:51:56 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/07 16:10:55 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 15:27:40 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_check_redir_sub(char *line, int i, int *redir)
 	}
 }
 
-void	ft_check_redir(char *line)
+void	ft_check_redir(char *line, char **env)
 {
 	int	redir;
 	int	quote;
@@ -58,5 +58,5 @@ void	ft_check_redir(char *line)
 	else if (redir == 2)
 		printf("syntax error: unknown redirection path\n");
 	else
-		ft_check_pipe(line);
+		ft_check_pipe(line, env);
 }

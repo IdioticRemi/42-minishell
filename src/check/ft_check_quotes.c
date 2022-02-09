@@ -6,13 +6,13 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:51:56 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/07 16:00:32 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 15:27:33 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_check_quotes(char *line)
+void	ft_check_quotes(char *line, char **env)
 {
 	int	quote;
 	int	i;
@@ -29,5 +29,5 @@ void	ft_check_quotes(char *line)
 	if (quote)
 		printf("syntax error: unexpected end of line\n");
 	else
-		ft_check_redir(line);
+		ft_check_redir(line, env);
 }

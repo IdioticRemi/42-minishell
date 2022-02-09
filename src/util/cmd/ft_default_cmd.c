@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_default_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 14:28:00 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:23:30 by tjolivea         ###   ########.fr       */
+/*   Created: 2022/02/09 15:12:56 by tjolivea          #+#    #+#             */
+/*   Updated: 2022/02/09 16:19:06 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_memcpy(void *dst, void *src, size_t n)
+void	ft_default_cmd(t_cmd *cmd)
 {
-	size_t			i;
-	unsigned char	*dest;
-	unsigned char	*source;
-
-	if (!dst && !src)
-		return (0);
-	i = 0;
-	dest = (unsigned char *)dst;
-	source = (unsigned char *)src;
-	while (i < n)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-	return (dst);
+	cmd->append = 0;
+	cmd->heredoc = 0;
+	cmd->argv = NULL;
+	cmd->in = NULL;
+	cmd->out = NULL;
+	cmd->next = NULL;
 }

@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 14:28:00 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:23:30 by tjolivea         ###   ########.fr       */
+/*   Created: 2022/02/09 15:13:49 by tjolivea          #+#    #+#             */
+/*   Updated: 2022/02/09 16:07:16 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_memcpy(void *dst, void *src, size_t n)
+t_cmd	*parsing(char *line)
 {
-	size_t			i;
-	unsigned char	*dest;
-	unsigned char	*source;
+	t_cmd *cmd;
 
-	if (!dst && !src)
-		return (0);
-	i = 0;
-	dest = (unsigned char *)dst;
-	source = (unsigned char *)src;
-	while (i < n)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-	return (dst);
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		return (NULL);
+	ft_default_cmd(cmd);
+	throw_cases(line, cmd);
+	return (cmd);
 }

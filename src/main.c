@@ -6,13 +6,13 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/07 15:47:34 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 15:35:11 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_prompt(void)
+static void	ft_prompt(char **env)
 {
 	char	*line;
 
@@ -24,7 +24,7 @@ static void	ft_prompt(void)
 		exit(0);
 	}
 	add_history(line);
-	ft_check(line);
+	ft_check(line, env);
 	free(line);
 }
 
@@ -33,8 +33,12 @@ static void	ft_signal(int sig)
 	char	*empty;
 
 	if (g_shell->pid_count > 0)
+	{
 		while (--g_shell->pid_count)
 			kill(g_shell->pids[g_shell->pid_count], sig);
+		write(1, "\n", 1);
+		return ;
+	}
 	empty = ft_calloc(1, 1);
 	write(1, "\n", 1);
 	rl_replace_line(empty, 0);
@@ -43,8 +47,10 @@ static void	ft_signal(int sig)
 	free(empty);
 }
 
-int	main(void)
+int	main(int ac, char **argv, char **env)
 {
+	(void) ac;
+	(void) argv;
 	g_shell = malloc(sizeof(t_shell));
 	if (!g_shell)
 		return (1);
@@ -57,7 +63,7 @@ int	main(void)
 	signal(SIGQUIT, ft_signal);
 	signal(SIGINT, ft_signal);
 	while (1)
-		ft_prompt();
+		ft_prompt(env);
 	free(g_shell);
 	return (0);
 }

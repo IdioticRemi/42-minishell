@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/01 14:28:00 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:23:30 by tjolivea         ###   ########.fr       */
+/*   Created: 2022/02/09 14:57:16 by tjolivea          #+#    #+#             */
+/*   Updated: 2022/02/09 15:02:54 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*ft_memcpy(void *dst, void *src, size_t n)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t			i;
-	unsigned char	*dest;
-	unsigned char	*source;
+	char	*result;
+	int		size;
 
-	if (!dst && !src)
-		return (0);
-	i = 0;
-	dest = (unsigned char *)dst;
-	source = (unsigned char *)src;
-	while (i < n)
-	{
-		dest[i] = source[i];
-		i++;
-	}
-	return (dst);
+	if (!s1 || !s2)
+		return (NULL);
+	size = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	result = malloc(size + 1);
+	if (result == NULL)
+		return (NULL);
+	result[size] = '\0';
+	ft_memcpy(result, s1, ft_strlen((char *)s1));
+	ft_memcpy(result + ft_strlen((char *)s1), s2, ft_strlen((char *)s2));
+	return (result);
 }

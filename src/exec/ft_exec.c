@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 12:29:55 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/07 15:44:43 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/02/09 16:18:27 by tjolivea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	ft_exec(t_cmd *cmd, char **env)
 	i = -1;
 	while (++i < cmdsize)
 	{
+		// dprintf(2, "%lu\n", cmdsize);
+		// dprintf(2, "%s %s %s %d\n", cmd->argv[0], cmd->in, cmd->out, cmd->append);
 		g_shell->pids[i] = ft_exec_router(cmd, env);
 		cmd = cmd->next;
 	}
