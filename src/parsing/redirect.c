@@ -6,17 +6,19 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:14:21 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 19:18:39 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:34:32 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int heredoc_c(char *end, t_cmd *stru, char *start)
+int heredoc_c(char *end, t_cmd *stru)
 {
-    if (ft_strncmp(start, "cat", ft_strlen(start)) != 0)   
-        return (1);
     //heredoc
+    //fillcmd(inpout)
+    //free end
+    stru->heredoc = 1;
+    free(end);
     return (0);
 }
 
@@ -130,7 +132,9 @@ int for_rre(char *cmd, t_cmd *stru)
     char *path;
     int mode;
     int is_open;
-
+    char *heredoc;
+    
+    heredoc = NULL;
     path = NULL;
     mode = 0;
     is_open = -1;
@@ -144,14 +148,11 @@ int for_rre(char *cmd, t_cmd *stru)
             corr_free(path);
             if (cmd[i + 1] && cmd[i + 1] == '<')
             {
-                mode = 2;
-                path = get_next(cmd, i + 1);
-                if (heredoc_c(path, stru, get_first(skipSpasce(ft_strdup(cmd)), 0)));
-                {
-                    i++;
-                    continue;
-                }
-                i++;
+                if (heredoc)
+                    corr_free(heredoc);
+                heredoc = get_next(cmd, i + 1);
+                i += 2;
+                continue;
             }    
             else
             {
@@ -168,6 +169,7 @@ int for_rre(char *cmd, t_cmd *stru)
         }
         i++;
     }
+    heredoc_c(heredoc, stru);
     stru->append = mode;
     stru->in = path;
     return (mode);
