@@ -6,19 +6,18 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:14:21 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/10 13:34:32 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/02/10 14:43:31 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int heredoc_c(char *end, t_cmd *stru)
+int heredoc_c(char **end, t_cmd *stru)
 {
     //heredoc
     //fillcmd(inpout)
-    //free end
     stru->heredoc = 1;
-    free(end);
+    ft_afree(end);
     return (0);
 }
 
@@ -55,8 +54,8 @@ char *conv_redir(char *cmd)
             end = ft_substr(new, i, ft_strlen(new + i));
             free(new);
             new = ft_strjoin(start, end);
-            corr_free(start);
-            corr_free(end);
+            free(start);
+            free(end);
             i = 0;
         }
         i++;
@@ -132,7 +131,8 @@ int for_rre(char *cmd, t_cmd *stru)
     char *path;
     int mode;
     int is_open;
-    char *heredoc;
+    char **heredoc;
+    int j;
     
     heredoc = NULL;
     path = NULL;
@@ -145,15 +145,15 @@ int for_rre(char *cmd, t_cmd *stru)
             close(is_open);
         if (cmd[i] == '<')
         {
-            corr_free(path);
+            free(path);
             if (cmd[i + 1] && cmd[i + 1] == '<')
             {
-                if (heredoc)
-                    corr_free(heredoc);
-                heredoc = get_next(cmd, i + 1);
+                heredoc = (char **)realloc(heredoc, sizeof(char *) * (j + 2));
+                heredoc[j] = get_next(cmd, i + 1);
+                j++;
                 i += 2;
                 continue;
-            }    
+            }
             else
             {
                 mode = 1;
@@ -169,7 +169,11 @@ int for_rre(char *cmd, t_cmd *stru)
         }
         i++;
     }
-    heredoc_c(heredoc, stru);
+    if (heredoc)
+    {
+        heredoc[j] = NULL;
+        heredoc_c(heredoc, stru);
+    }
     stru->append = mode;
     stru->in = path;
     return (mode);
