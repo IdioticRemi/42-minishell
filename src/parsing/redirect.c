@@ -40,7 +40,6 @@ char **ft_realloc(char **str, char *value)
     }
     else
     {
-        printf("%s\n", str[0]);
         while (str[++i]);
         final = (char **)malloc(sizeof(char *) * (i + 2));
         i = -1;
