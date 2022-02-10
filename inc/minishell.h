@@ -50,7 +50,7 @@ typedef struct s_cmd {
 	struct s_cmd	*next;
 }	t_cmd;
 
-t_shell	*g_shell;
+t_shell *g_shell;
 
 // Checks
 
@@ -115,5 +115,12 @@ char	**ft_split(char *s, char c);
 
 char	*ft_pathfind(char *cmd, char **env);
 char	*ft_pathjoin(char *path, char *bin);
+
+
+
+//debug 
+
+void debug(t_cmd *cmd);
+
 
 #endif

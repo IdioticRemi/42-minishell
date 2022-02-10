@@ -66,12 +66,14 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	err = for_re(cmd_true, cmd);
 	if (err == 0)
 		err = for_rre(cmd_true, cmd);
+	
 	if (err != -1)
 	{
 		cmd_true = conv_redir(cmd_true);
 		cmd->argv = conv_args(cmd_true);
-		cmd->argv[0] = get_first(cmd_true, 1);
+		cmd->argv[0] = get_first(cmd_true, 0);
 	}
+	
 	free(cmd_true);
 	cmd->next = NULL;
 }

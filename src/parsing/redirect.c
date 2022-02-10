@@ -14,11 +14,44 @@
 
 int heredoc_c(char **end, t_cmd *stru)
 {
-    //heredoc
+    int i;
+
+    i = -1;
+
+    // printf("heredoc endter\n");
+    // while (end[++i])
+    //     printf("heredoc key : %s  | index : %d \n", end[i], i);
     //fillcmd(inpout)
     stru->heredoc = 1;
-    ft_afree(end);
+    ft_afree((void **)end);
     return (0);
+}
+
+char **ft_realloc(char **str, char *value)
+{
+    char **final;
+    int i;
+
+    i = -1;
+    if (str == NULL)
+    {
+        final = (char **)malloc(sizeof(char *) * 2);
+        i++;
+    }
+    else
+    {
+        printf("%s\n", str[0]);
+        while (str[++i]);
+        final = (char **)malloc(sizeof(char *) * (i + 2));
+        i = -1;
+        while (str[++i])
+            final[i] = ft_strdup(str[i]);
+    }
+    final[i] = value;
+    final[i + 1] = NULL;
+    if (str)
+        ft_afree((void **)str);
+    return (final);
 }
 
 char *conv_redir(char *cmd)
@@ -36,6 +69,7 @@ char *conv_redir(char *cmd)
     {
         if (new[i] == '>' || new[i] == '<')
         {
+            
             start = ft_substr(new, 0, i);
             if (new[i + 1] && (new[i + 1] == '>' || new[i + 1] == '<'))
                 i++;
@@ -45,11 +79,11 @@ char *conv_redir(char *cmd)
                 free(start);
                 start = temp;
             }
-            while (new[i] == '>' || new[i] == '<' || new[i] == ' ')
+            while (new[i] && (new[i] == '>' || new[i] == '<' || new[i] == ' '))
                 i++;
-            while (new[i] != ' ')
+            while (new[i] && new[i] != ' ')
                 i++;
-            while (new[i] == ' ')
+            while (new[i] && new[i] == ' ')
                 i++;
             end = ft_substr(new, i, ft_strlen(new + i));
             free(new);
@@ -60,6 +94,7 @@ char *conv_redir(char *cmd)
         }
         i++;
     }
+    
     return (new);
 }
 
@@ -134,6 +169,7 @@ int for_rre(char *cmd, t_cmd *stru)
     char **heredoc;
     int j;
     
+    j = 0;
     heredoc = NULL;
     path = NULL;
     mode = 0;
@@ -148,8 +184,7 @@ int for_rre(char *cmd, t_cmd *stru)
             free(path);
             if (cmd[i + 1] && cmd[i + 1] == '<')
             {
-                heredoc = (char **)realloc(heredoc, sizeof(char *) * (j + 2));
-                heredoc[j] = get_next(cmd, i + 1);
+                heredoc = ft_realloc(heredoc, get_next(cmd, i + 1));
                 j++;
                 i += 2;
                 continue;
