@@ -28,15 +28,14 @@ int white_spasce(char *str)
 	return (i);
 }
 
-char *get_first(char *cmd_b, int nfree)
+char *get_first(char *cmd_b)
 {
 	int i;
 	
 	i = 0;
 	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n')
 		i++;
-	if (nfree)
-		free(cmd_b);
+
 	return (ft_substr(cmd_b, 0, i));
 }
 
@@ -58,6 +57,7 @@ char *skipSpasce(char *cmd_b)
 void fill_cmd(char *cmd_b, t_cmd *cmd)
 {
 	char *cmd_true;
+	char *cmd_true_true;
 	int err;
 
 	err = 0;
@@ -66,14 +66,13 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	err = for_re(cmd_true, cmd);
 	if (err == 0)
 		err = for_rre(cmd_true, cmd);
-	
 	if (err != -1)
 	{
-		cmd_true = conv_redir(cmd_true);
-		cmd->argv = conv_args(cmd_true);
-		cmd->argv[0] = get_first(cmd_true, 0);
+		cmd_true_true = conv_redir(cmd_true);
+		cmd->argv = conv_args(cmd_true_true);
+		cmd->argv[0] = get_first(cmd_true_true);
 	}
-	
+	debug(cmd);
 	free(cmd_true);
 	cmd->next = NULL;
 }

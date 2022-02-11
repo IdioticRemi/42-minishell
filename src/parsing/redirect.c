@@ -12,20 +12,7 @@
 
 #include "minishell.h"
 
-int heredoc_c(char **end, t_cmd *stru)
-{
-    int i;
 
-    i = -1;
-
-    // printf("heredoc endter\n");
-    // while (end[++i])
-    //     printf("heredoc key : %s  | index : %d \n", end[i], i);
-    //fillcmd(inpout)
-    stru->heredoc = 1;
-    ft_afree((void **)end);
-    return (0);
-}
 
 char **ft_realloc(char **str, char *value)
 {
@@ -40,7 +27,6 @@ char **ft_realloc(char **str, char *value)
     }
     else
     {
-        printf("%s\n", str[0]);
         while (str[++i]);
         final = (char **)malloc(sizeof(char *) * (i + 2));
         i = -1;
@@ -54,6 +40,53 @@ char **ft_realloc(char **str, char *value)
     return (final);
 }
 
+size_t ft_max(size_t a, size_t b)
+{
+    if (a < b)
+        return (b);
+    return (a);
+}
+
+void set_s(char *line, t_cmd *stru, char *cmd)
+{
+    t_cmd *new;
+    char *cmd_true;
+
+    while (stru->next)
+        stru = stru->next;
+    new = malloc(sizeof(t_cmd));
+    ft_default_cmd(new);
+    cmd_true = conv_redir(cmd);
+	new->argv = conv_args(cmd_true);
+	new->argv[0] = get_first(cmd_true);
+    new->argv = ft_realloc(new->argv, line);
+    new->heredoc = 1;
+    stru->next = new;
+    free(cmd_true);
+}
+
+int heredoc_c(char **end, t_cmd *stru, char *cmd)
+{
+    int i;
+    char	*line;
+    
+    i = 0;
+    while (end[i])
+    {
+        line = readline("\033[31mHEREDOC\033[0m> ");
+        if (!line)
+            break;
+        if (ft_strncmp(line, end[i], ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
+            i++;
+        if (end[i])
+            set_s(line, stru, cmd);
+    }
+    stru->heredoc = 1;
+    ft_afree((void **)end);
+    return (0);
+}
+
+
 char *conv_redir(char *cmd)
 {
     int i;
@@ -64,7 +97,6 @@ char *conv_redir(char *cmd)
 
     i = 0;
     new = ft_strdup(cmd);
-    free(cmd);
     while (new[i])
     {
         if (new[i] == '>' || new[i] == '<')
@@ -205,10 +237,7 @@ int for_rre(char *cmd, t_cmd *stru)
         i++;
     }
     if (heredoc)
-    {
-        heredoc[j] = NULL;
-        heredoc_c(heredoc, stru);
-    }
+        heredoc_c(heredoc, stru, cmd);
     stru->append = mode;
     stru->in = path;
     return (mode);
