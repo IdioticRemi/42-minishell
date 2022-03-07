@@ -19,6 +19,7 @@ void debug(t_cmd *cmd)
 		else
 			printf("args : %s\n", NULL);
 		printf(">> : %d\n", cmd->append);
+		printf("heredoc : %d\n", cmd->heredoc);
 		cmd = cmd->next;
 		y++;
 	}

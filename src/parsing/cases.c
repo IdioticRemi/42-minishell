@@ -72,7 +72,6 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 		cmd->argv = conv_args(cmd_true_true);
 		cmd->argv[0] = get_first(cmd_true_true);
 	}
-	debug(cmd);
 	free(cmd_true);
 	cmd->next = NULL;
 }

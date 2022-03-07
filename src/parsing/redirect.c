@@ -47,29 +47,27 @@ size_t ft_max(size_t a, size_t b)
     return (a);
 }
 
-void set_s(char *line, t_cmd *stru, char *cmd)
+char * set_s(char *line, char *cmd_final)
 {
-    t_cmd *new;
-    char *cmd_true;
+    char *temp;
+    char *final;
 
-    while (stru->next)
-        stru = stru->next;
-    new = malloc(sizeof(t_cmd));
-    ft_default_cmd(new);
-    cmd_true = conv_redir(cmd);
-	new->argv = conv_args(cmd_true);
-	new->argv[0] = get_first(cmd_true);
-    new->argv = ft_realloc(new->argv, line);
-    new->heredoc = 1;
-    stru->next = new;
-    free(cmd_true);
+    if (cmd_final == NULL)
+        cmd_final = malloc(ft_strlen(get_first(line)) * sizeof(char));
+    temp = ft_strjoin(line, "\n");
+    final = ft_strjoin(cmd_final, temp);
+    free(temp);
+    free(cmd_final);
+    return final;
 }
 
-int heredoc_c(char **end, t_cmd *stru, char *cmd)
+char * heredoc_c(char **end, t_cmd *stru)
 {
     int i;
     char	*line;
-    
+    char *final_line;
+
+    final_line = NULL;
     i = 0;
     while (end[i])
     {
@@ -79,11 +77,12 @@ int heredoc_c(char **end, t_cmd *stru, char *cmd)
         if (ft_strncmp(line, end[i], ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
             i++;
         if (end[i])
-            set_s(line, stru, cmd);
+            final_line = set_s(line, final_line);
     }
     stru->heredoc = 1;
+
     ft_afree((void **)end);
-    return (0);
+    return (final_line);
 }
 
 
@@ -200,11 +199,13 @@ int for_rre(char *cmd, t_cmd *stru)
     int is_open;
     char **heredoc;
     int j;
+    char *temp;
     
     j = 0;
     heredoc = NULL;
     path = NULL;
     mode = 0;
+    temp = NULL;
     is_open = -1;
     i = 0;
     while (cmd[i])
@@ -237,8 +238,12 @@ int for_rre(char *cmd, t_cmd *stru)
         i++;
     }
     if (heredoc)
-        heredoc_c(heredoc, stru, cmd);
+        temp = heredoc_c(heredoc, stru);
+    if (temp != NULL)
+        stru->in = temp;
+    else
+        stru->in = path;
+    
     stru->append = mode;
-    stru->in = path;
     return (mode);
 }
