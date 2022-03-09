@@ -6,10 +6,10 @@ NAME	= minishell
 INC_DIR	= inc/
 SRC_DIR	= src/
 OBJ_DIR	= obj/
-SUBDIRS = $(addprefix $(OBJ_DIR), $(shell find -mindepth 1 -type d -path "./src/*" | cut -c 7-))
+SUBDIRS = $(addprefix $(OBJ_DIR), $(shell find . -mindepth 1 -type d -path "./src/*" | cut -c 7-))
 
 # Sources
-__SRCS	= $(shell find -type f -path "./src/*.c" | cut -c 7-)
+__SRCS	= $(shell find . -type f -path "./src/*.c" | cut -c 7-)
 
 SRCS	= $(addprefix $(SRC_DIR), $(__SRCS))
 OBJS	= $(addprefix $(OBJ_DIR), $(__SRCS:.c=.o))
@@ -19,7 +19,7 @@ CC		= clang
 
 CFLAGS	= -Wall -Werror -Wextra -O3 -g3
 INCLUDE	= -I $(INC_DIR)
-LIBS	= -lreadline
+LIBS	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline
 
 # Color
 

@@ -62,6 +62,8 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 
 	err = 0;
 	cmd_true = skipSpasce(ft_strdup(cmd_b));
+	printf("%d\n", in_singlequote(cmd_true, 5));
+	printf("%c\n", cmd_true[5]);
 	free(cmd_b);
 	err = for_re(cmd_true, cmd);
 	if (err == 0)

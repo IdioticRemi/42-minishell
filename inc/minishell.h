@@ -71,6 +71,7 @@ char	*conv_redir(char *cmd);
 char	**conv_args(char *b_cmd);
 char 	*get_first(char *cmd_b);
 char	*skipSpasce(char *cmd_b);
+int 	in_singlequote(char * cmd, int index);
 
 // Execution
 
