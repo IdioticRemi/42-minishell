@@ -87,6 +87,12 @@ void throw_cases(char *cmd_b, t_cmd *cmd)
 
 	b_sep = ft_split(cmd_b, '|');
 	i = 0;
+	if (!b_sep[i])
+	{
+		ft_default_cmd(cmd);
+		cmd->argv = malloc(1);
+		cmd->argv = NULL;
+	}
 	while (b_sep[i])
 	{
 		fill_cmd(b_sep[i], cmd);
