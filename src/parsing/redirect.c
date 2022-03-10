@@ -95,6 +95,7 @@ char * heredoc_c(char **end, t_cmd *stru)
     int bool_quote;
     char	*line;
     char *final_line;
+	char *temp;
 
     final_line = NULL;
     i = 0;
@@ -103,7 +104,8 @@ char * heredoc_c(char **end, t_cmd *stru)
         line = readline("\033[31mHEREDOC\033[0m> ");
         if (!line)
             break;
-        if (ft_strncmp(line, end[i], ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
+		temp = without_quote(end[i]);
+        if (ft_strncmp(line, temp, ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
             i++;
         if (end[i])
             bool_quote = checkHereDocQuote(end[i]);
@@ -111,6 +113,7 @@ char * heredoc_c(char **end, t_cmd *stru)
             bool_quote = 0;
         if (end[i])
             final_line = set_s(line, final_line, bool_quote);
+		free(temp);
     }
     stru->heredoc = 1;
 

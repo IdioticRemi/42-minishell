@@ -137,3 +137,48 @@ char * with_var(char *brut, t_env *env)
 	}
 	return result;
 }
+
+
+char * without_quote(char * cmd)
+{
+	int i;
+	char *result;
+	char *start;
+	char *end;
+
+	result = ft_strdup(cmd);
+	i = 0;
+	start = NULL;
+	end = NULL;
+	while (result[i])
+	{
+		if (result[i] == '\'' || result[i] == '"')
+		{
+			start = ft_substr(result, 0, i);
+			end = ft_substr(result, i + 1, ft_strlen(result) - i);
+			free(result);
+			result = ft_own_strjoin(start, end);
+			i = 0;
+		}
+		else
+			i++;
+	}
+	return result;
+}
+
+void without_quote_args(char ** argv)
+{
+	int i;
+	char *temp;
+
+	temp = NULL;
+	i = 0;
+	while (argv[i])
+	{
+		temp = ft_strdup(argv[i]);
+		free(argv[i]);
+		argv[i] = without_quote(temp);
+		free(temp);
+		i++;
+	}
+}
