@@ -54,8 +54,6 @@ char * set_s(char *line, char *cmd_final, int isInquote)
     char *temp2;
 
     temp2 = NULL;
-    if (cmd_final == NULL)
-        cmd_final = malloc(ft_strlen(get_first(line)) * sizeof(char));
     if (isInquote == 0)
     {
         temp2 = with_var(line, NULL); //env
@@ -63,11 +61,15 @@ char * set_s(char *line, char *cmd_final, int isInquote)
     }
     else
         temp = ft_strjoin(line, "\n");
-    final = ft_strjoin(cmd_final, temp);
+	if (cmd_final)
+    	final = ft_strjoin(cmd_final, temp);
+	else
+		final = ft_strdup(temp);
     free(temp);
     if (temp2)
         free(temp2);
-    free(cmd_final);
+	if (cmd_final)
+		free(cmd_final);
     return final;
 }
 
@@ -101,7 +103,6 @@ char * heredoc_c(char **end, t_cmd *stru)
         line = readline("\033[31mHEREDOC\033[0m> ");
         if (!line)
             break;
-        
         if (ft_strncmp(line, end[i], ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
             i++;
         if (end[i])
