@@ -58,13 +58,13 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 {
 	char *cmd_true;
 	char *cmd_true_true;
+	char * temp;
 	int err;
 
 	err = 0;
-	cmd_true = skipSpasce(ft_strdup(cmd_b));
-	printf("%d\n", in_singlequote(cmd_true, 5));
-	printf("%c\n", cmd_true[5]);
+	temp = skipSpasce(ft_strdup(cmd_b));	
 	free(cmd_b);
+	cmd_true = with_var(temp, NULL);
 	err = for_re(cmd_true, cmd);
 	if (err == 0)
 		err = for_rre(cmd_true, cmd);
@@ -75,6 +75,7 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 		cmd->argv[0] = get_first(cmd_true_true);
 	}
 	free(cmd_true);
+	free(temp);
 	cmd->next = NULL;
 }
 

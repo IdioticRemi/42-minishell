@@ -47,23 +47,50 @@ size_t ft_max(size_t a, size_t b)
     return (a);
 }
 
-char * set_s(char *line, char *cmd_final)
+char * set_s(char *line, char *cmd_final, int isInquote)
 {
     char *temp;
     char *final;
+    char *temp2;
 
+    temp2 = NULL;
     if (cmd_final == NULL)
         cmd_final = malloc(ft_strlen(get_first(line)) * sizeof(char));
-    temp = ft_strjoin(line, "\n");
+    if (isInquote == 0)
+    {
+        temp2 = with_var(line, NULL); //env
+        temp = ft_strjoin(temp2, "\n");
+    }
+    else
+        temp = ft_strjoin(line, "\n");
     final = ft_strjoin(cmd_final, temp);
     free(temp);
+    if (temp2)
+        free(temp2);
     free(cmd_final);
     return final;
+}
+
+int checkHereDocQuote(char * end)
+{
+    int i;
+
+    i = 0;
+
+        while(end[i])
+        {
+            if (end[i] == '\'' || end[i] == '"')
+                return (1); 
+            i++;
+        }
+
+    return (0);
 }
 
 char * heredoc_c(char **end, t_cmd *stru)
 {
     int i;
+    int bool_quote;
     char	*line;
     char *final_line;
 
@@ -74,10 +101,15 @@ char * heredoc_c(char **end, t_cmd *stru)
         line = readline("\033[31mHEREDOC\033[0m> ");
         if (!line)
             break;
+        
         if (ft_strncmp(line, end[i], ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
             i++;
         if (end[i])
-            final_line = set_s(line, final_line);
+            bool_quote = checkHereDocQuote(end[i]);
+        else
+            bool_quote = 0;
+        if (end[i])
+            final_line = set_s(line, final_line, bool_quote);
     }
     stru->heredoc = 1;
 
@@ -98,7 +130,7 @@ char *conv_redir(char *cmd)
     new = ft_strdup(cmd);
     while (new[i])
     {
-        if (new[i] == '>' || new[i] == '<')
+        if ((new[i] == '>' || new[i] == '<') && in_quote(cmd, i) == 0)
         {
             
             start = ft_substr(new, 0, i);
@@ -161,7 +193,7 @@ int for_re(char *cmd, t_cmd *stru)
     {
         if (is_open > 0)
             close(is_open);
-        if (cmd[i] == '>')
+        if (cmd[i] == '>' && in_quote(cmd, i) == 0)
         {
             free(path);
             path = NULL;
@@ -212,7 +244,7 @@ int for_rre(char *cmd, t_cmd *stru)
     {
         if (is_open > 0)
             close(is_open);
-        if (cmd[i] == '<')
+        if (cmd[i] == '<' && in_quote(cmd, i) == 0)
         {
             free(path);
             if (cmd[i + 1] && cmd[i + 1] == '<')

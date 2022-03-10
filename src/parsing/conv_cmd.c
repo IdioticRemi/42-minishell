@@ -70,15 +70,15 @@ char **conv_args(char *b_cmd)
 		return (NULL);
 	while (b_cmd[i])
 	{
-		if (i > 0 && b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
+		if (i > 0 && b_cmd[i - 1] && (b_cmd[i - 1] == ' ' && in_quote(b_cmd, i - 1) == 0) && b_cmd[i] != ' ' && b_cmd[i] != '-')
 		{
 			start = i;
-			while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
+			while (b_cmd[i] && (b_cmd[i] != '\0' && (b_cmd[i] != ' ' || in_quote(b_cmd, i) == 1) && b_cmd[i] != '\n'))
 				i++;
 			args[y] = ft_substr(b_cmd, start, i - start);
 			y++;
 		}
-		else if (b_cmd[i] == '-')
+		else if (b_cmd[i] == '-' && in_quote(b_cmd, i) == 0)
 		{
 			if (b_cmd[i + 1] && b_cmd[i + 1] == '-')
 			{
