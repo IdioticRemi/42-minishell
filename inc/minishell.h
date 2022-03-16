@@ -47,6 +47,7 @@ typedef struct s_cmd {
 	int				heredoc;
 	int				append;
 	char			**argv;
+	int				status;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -72,7 +73,7 @@ char	**conv_args(char *b_cmd);
 char 	*get_first(char *cmd_b);
 char	*skipSpasce(char *cmd_b);
 int		in_quote(char * cmd, int index);
-char 	*with_var(char *brut, t_env *env);
+char  *with_var(char *brut, t_env *env, t_cmd *cmd);
 size_t  ft_max(size_t a, size_t b);
 char * 	without_quote(char * cmd);
 void 	without_quote_args(char ** argv);
@@ -115,6 +116,7 @@ char	*ft_strdup(char *src);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	**ft_split(char *s, char c);
+char	*ft_itoa(int nb);
 
 // Path utils
 

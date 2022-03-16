@@ -76,7 +76,7 @@ int get_next_space(char * cmd, int index)
 	int i;
 
 	i = index;
-	while (cmd[i] != '\0' && cmd[i] != ' ')
+	while (cmd[i] != '\0' && cmd[i] != ' ' && cmd[i] != '?'  && cmd[i] != '$')
 		i++;
 	return (i);
 }
@@ -105,7 +105,7 @@ char	*ft_own_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-char * with_var(char *brut, t_env *env)
+char * with_var(char *brut, t_env *env, t_cmd *cmd)
 {
 	(void)env;
 	char * result;
@@ -123,11 +123,17 @@ char * with_var(char *brut, t_env *env)
 		if (result[i] == '$' && in_quote(result, i) == 0 && result[i + 1] && result[i + 1] != ' ')
 		{
 			if (i > 0)
-				tempStart = ft_substr(result, 0, i - 1);
-			tempEnd = ft_substr(result, get_next_space(result, i), ft_strlen(result) -  get_next_space(result, i));
-			if (tempStart)
-				tempStart = ft_own_strjoin(tempStart, ft_strdup(" "));
-			tempResult = ft_own_strjoin(tempStart, ft_strdup("pr$t")); //get_env_var(brut , i)
+				tempStart = ft_substr(result, 0, i);
+			if (result[i + 1] == '?')
+			{
+				tempResult = ft_own_strjoin(tempStart, ft_itoa(cmd->status));
+				tempEnd = ft_substr(result, get_next_space(result, i + 1) + 1, ft_strlen(result) -  (get_next_space(result, i + 1) + 1));
+			}
+			else
+			{
+				tempEnd = ft_substr(result, get_next_space(result, i + 1), ft_strlen(result) -  get_next_space(result, i));
+				tempResult = ft_own_strjoin(tempStart, ft_strdup("pr$t")); //get_env_var(brut , i)
+			}
 			free(result);
 			i = ft_strlen(tempResult);
 			result = ft_own_strjoin(tempResult, tempEnd);
