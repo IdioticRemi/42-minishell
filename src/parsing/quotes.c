@@ -105,7 +105,7 @@ char	*ft_own_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-char * with_var(char *brut, t_env *env, t_cmd *cmd)
+char * with_var(char *brut, t_env *env)
 {
 	(void)env;
 	char * result;
@@ -126,7 +126,7 @@ char * with_var(char *brut, t_env *env, t_cmd *cmd)
 				tempStart = ft_substr(result, 0, i);
 			if (result[i + 1] == '?')
 			{
-				tempResult = ft_own_strjoin(tempStart, ft_itoa(cmd->status));
+				tempResult = ft_own_strjoin(tempStart, ft_itoa(g_shell->status));
 				tempEnd = ft_substr(result, get_next_space(result, i + 1) + 1, ft_strlen(result) -  (get_next_space(result, i + 1) + 1));
 			}
 			else

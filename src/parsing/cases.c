@@ -64,7 +64,7 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	err = 0;
 	temp = skipSpasce(ft_strdup(cmd_b));	
 	free(cmd_b);
-	cmd_true = with_var(temp, NULL, cmd);
+	cmd_true = with_var(temp, NULL);
 	err = for_re(cmd_true, cmd);
 	if (err == 0)
 		err = for_rre(cmd_true, cmd);

@@ -47,7 +47,7 @@ size_t ft_max(size_t a, size_t b)
     return (a);
 }
 
-char * set_s(char *line, char *cmd_final, int isInquote, t_cmd *stru)
+char * set_s(char *line, char *cmd_final, int isInquote)
 {
     char *temp;
     char *final;
@@ -56,7 +56,7 @@ char * set_s(char *line, char *cmd_final, int isInquote, t_cmd *stru)
     temp2 = NULL;
     if (isInquote == 0)
     {
-        temp2 = with_var(line, NULL, stru); //env
+        temp2 = with_var(line, NULL); //env
         temp = ft_strjoin(temp2, "\n");
     }
     else
@@ -112,7 +112,7 @@ char * heredoc_c(char **end, t_cmd *stru)
         else
             bool_quote = 0;
         if (end[i])
-            final_line = set_s(line, final_line, bool_quote, stru);
+            final_line = set_s(line, final_line, bool_quote);
 		free(temp);
     }
     stru->heredoc = 1;
