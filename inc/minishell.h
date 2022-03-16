@@ -47,7 +47,6 @@ typedef struct s_cmd {
 	int				heredoc;
 	int				append;
 	char			**argv;
-	int				status;
 	struct s_cmd	*next;
 }	t_cmd;
 

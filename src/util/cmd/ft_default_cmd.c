@@ -16,7 +16,6 @@ void	ft_default_cmd(t_cmd *cmd)
 {
 	cmd->append = 0;
 	cmd->heredoc = 0;
-	cmd->status = 0;
 	cmd->argv = NULL;
 	cmd->in = NULL;
 	cmd->out = NULL;
