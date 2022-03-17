@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:06:52 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:27:56 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:47:45 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	ft_check_pipe_sub(char *line, int i, int *hpipe)
 	}
 }
 
-void	ft_check_pipe(char *line, char **env)
+void	ft_check_pipe(char *line)
 {
 	int	quote;
 	int	hpipe;
@@ -58,5 +58,5 @@ void	ft_check_pipe(char *line, char **env)
 	else if (hpipe == 2)
 		printf("syntax error: unexpected end of line\n");
 	else
-		ft_exec(parsing(line), env);
+		ft_exec(parsing(line));
 }

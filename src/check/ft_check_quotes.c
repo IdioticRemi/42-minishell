@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_check_quotes(char *line, char **env)
+void	ft_check_quotes(char *line)
 {
 	int	quote;
 	int	i;
@@ -29,5 +29,5 @@ void	ft_check_quotes(char *line, char **env)
 	if (quote)
 		printf("syntax error: unexpected end of line\n");
 	else
-		ft_check_redir(line, env);
+		ft_check_redir(line);
 }
