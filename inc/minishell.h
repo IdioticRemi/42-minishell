@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 19:14:07 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:10:16 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ typedef struct s_cmd {
 
 t_shell	*g_shell;
 
+// Main
+
+void	ft_clean_exit();
+
 // Checks
 
 void	ft_check(char *line, char **env);
@@ -86,11 +90,20 @@ pid_t	ft_exec_pipe(t_cmd *cmd, char **env);
 pid_t	ft_exec_heredoc(t_cmd *cmd);
 void	ft_exec_dup(t_cmd *cmd);
 
+// Environement
+
+t_env	*ft_parse_env(char **_env);
+
 // Cmd struct utils
 
 size_t	ft_cmdsize(t_cmd *cmd);
 void	ft_default_cmd(t_cmd *cmd);
 void	ft_free_cmd(t_cmd *cmd);
+
+// Env struct utils
+
+void	ft_add_env(t_env **env, char *key, char *value);
+void	ft_free_env(t_env *env);
 
 // Memory utils
 
