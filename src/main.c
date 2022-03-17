@@ -64,6 +64,4 @@ int	main(int ac, char **argv, char **env)
 	signal(SIGINT, ft_signal);
 	while (1)
 		ft_prompt(env);
-	free(g_shell);
-	return (0);
 }

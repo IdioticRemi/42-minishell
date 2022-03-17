@@ -50,7 +50,7 @@ typedef struct s_cmd {
 	struct s_cmd	*next;
 }	t_cmd;
 
-t_shell *g_shell;
+t_shell	*g_shell;
 
 // Checks
 
@@ -69,13 +69,13 @@ int		for_rre(char *cmd, t_cmd *stru);
 void	throw_cases(char *cmd_b, t_cmd *cmd);
 char	*conv_redir(char *cmd);
 char	**conv_args(char *b_cmd);
-char 	*get_first(char *cmd_b);
-char	*skipSpasce(char *cmd_b);
-int		in_quote(char * cmd, int index);
-char  	*with_var(char *brut, t_env *env);
-size_t  ft_max(size_t a, size_t b);
-char	*without_quote(char * cmd);
-void 	without_quote_args(char ** argv);
+char	*get_first(char *cmd_b);
+char	*skip_spaces(char *cmd_b);
+int		in_quote(char *cmd, int index);
+char	*with_var(char *brut, t_env *env);
+size_t	ft_max(size_t a, size_t b);
+char	*without_quote(char *cmd);
+void	without_quote_args(char **argv);
 
 // Execution
 
@@ -90,6 +90,7 @@ void	ft_exec_dup(t_cmd *cmd);
 
 size_t	ft_cmdsize(t_cmd *cmd);
 void	ft_default_cmd(t_cmd *cmd);
+void	ft_free_cmd(t_cmd *cmd);
 
 // Memory utils
 
@@ -122,11 +123,8 @@ char	*ft_itoa(int nb);
 char	*ft_pathfind(char *cmd, char **env);
 char	*ft_pathjoin(char *path, char *bin);
 
-
-
 //debug 
 
-void debug(t_cmd *cmd);
-
+void	debug(t_cmd *cmd);
 
 #endif

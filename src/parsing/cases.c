@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int white_spasce(char *str)
+int white_spaces(char *str)
 {
 	int i;
 
@@ -39,13 +39,13 @@ char *get_first(char *cmd_b)
 	return (ft_substr(cmd_b, 0, i));
 }
 
-char *skipSpasce(char *cmd_b)
+char *skip_spaces(char *cmd_b)
 {
 	int i;
 	char *res;
 
 	i = 0;
-	if (white_spasce(cmd_b) == 0)
+	if (white_spaces(cmd_b) == 0)
 		return (cmd_b);
 	while (cmd_b[i] && cmd_b[i] == ' ')
 		i++;
@@ -62,7 +62,8 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	int err;
 
 	err = 0;
-	temp = skipSpasce(ft_strdup(cmd_b));	
+    cmd_true_true = 0;
+	temp = skip_spaces(ft_strdup(cmd_b));	
 	free(cmd_b);
 	cmd_true = with_var(temp, NULL);
 	err = for_re(cmd_true, cmd);
@@ -75,6 +76,7 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 		cmd->argv[0] = get_first(cmd_true_true);
 	}
 	without_quote_args(cmd->argv);
+    free(cmd_true_true);
 	free(cmd_true);
 	free(temp);
 	cmd->next = NULL;
@@ -106,4 +108,5 @@ void throw_cases(char *cmd_b, t_cmd *cmd)
 		cmd = cmd->next;
 		i++;
 	}
+    free(b_sep);
 }
