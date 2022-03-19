@@ -17,7 +17,7 @@ static int	int_count(int nb)
 	int	count;
 
 	count = 0;
-	if (nb < 0 )
+	if (nb < 0)
 		count++;
 	while (nb / 10)
 	{

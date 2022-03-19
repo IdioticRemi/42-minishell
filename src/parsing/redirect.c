@@ -61,14 +61,14 @@ char * set_s(char *line, char *cmd_final, int isInquote)
     }
     else
         temp = ft_strjoin(line, "\n");
-	if (cmd_final)
+    if (cmd_final)
     	final = ft_strjoin(cmd_final, temp);
-	else
+    else
 		final = ft_strdup(temp);
     free(temp);
     if (temp2)
         free(temp2);
-	if (cmd_final)
+    if (cmd_final)
 		free(cmd_final);
     return final;
 }

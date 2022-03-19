@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_check(char *line, char **env)
+void	ft_check(char *line)
 {
-	ft_check_quotes(line, env);
+	ft_check_quotes(line);
 }

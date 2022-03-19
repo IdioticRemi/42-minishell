@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 19:14:07 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:48:16 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,19 @@ typedef struct s_cmd {
 	struct s_cmd	*next;
 }	t_cmd;
 
-t_shell *g_shell;
+t_shell	*g_shell;
+
+// Main
+
+void	ft_clean_exit(void);
 
 // Checks
 
-void	ft_check(char *line, char **env);
+void	ft_check(char *line);
 
-void	ft_check_quotes(char *line, char **env);
-void	ft_check_redir(char *line, char **env);
-void	ft_check_pipe(char *line, char **env);
+void	ft_check_quotes(char *line);
+void	ft_check_redir(char *line);
+void	ft_check_pipe(char *line);
 
 // Parsing
 
@@ -80,17 +84,30 @@ int		in_doublequote(char * cmd, int index);
 
 // Execution
 
-void	ft_exec(t_cmd *cmd, char **env);
+void	ft_exec(t_cmd *cmd);
 
-pid_t	ft_exec_single(t_cmd *cmd, char **env);
-pid_t	ft_exec_pipe(t_cmd *cmd, char **env);
+pid_t	ft_exec_single(t_cmd *cmd, t_env **env);
+pid_t	ft_exec_pipe(t_cmd *cmd, t_env **env);
 pid_t	ft_exec_heredoc(t_cmd *cmd);
 void	ft_exec_dup(t_cmd *cmd);
+
+// Environement
+
+t_env	*ft_parse_env(char **_env);
+char	**ft_env_to_array(t_env **env);
 
 // Cmd struct utils
 
 size_t	ft_cmdsize(t_cmd *cmd);
 void	ft_default_cmd(t_cmd *cmd);
+void	ft_free_cmd(t_cmd *cmd);
+
+// Env struct utils
+
+size_t	ft_env_size(t_env **env);
+void	ft_add_env(t_env **env, char *key, char *value);
+char	*ft_env_join(char *key, char *value);
+void	ft_free_env(t_env *env);
 
 // Memory utils
 
@@ -123,11 +140,8 @@ char	*ft_itoa(int nb);
 char	*ft_pathfind(char *cmd, char **env);
 char	*ft_pathjoin(char *path, char *bin);
 
-
-
 //debug 
 
-void debug(t_cmd *cmd);
-
+void	debug(t_cmd *cmd);
 
 #endif

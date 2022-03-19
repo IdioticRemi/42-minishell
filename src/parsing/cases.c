@@ -62,7 +62,8 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	int err;
 
 	err = 0;
-	temp = skipSpaces(ft_strdup(cmd_b));	
+    cmd_true_true = 0;
+	temp = skip_spaces(ft_strdup(cmd_b));	
 	free(cmd_b);
 	cmd_true = with_var(temp, NULL);
 	err = for_re(cmd_true, cmd);

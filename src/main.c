@@ -6,13 +6,20 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:35:11 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:48:37 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_prompt(char **env)
+void	ft_clean_exit(void)
+{
+	ft_free_env(g_shell->env);
+	free(g_shell);
+	exit(0);
+}
+
+static void	ft_prompt(void)
 {
 	char	*line;
 
@@ -20,11 +27,10 @@ static void	ft_prompt(char **env)
 	if (!line)
 	{
 		printf("exit\n");
-		free(g_shell);
-		exit(0);
+		ft_clean_exit();
 	}
 	add_history(line);
-	ft_check(line, env);
+	ft_check(line);
 	free(line);
 }
 
@@ -59,11 +65,11 @@ int	main(int ac, char **argv, char **env)
 	g_shell->stderr = dup(STDERR_FILENO);
 	g_shell->pid_count = 0;
 	g_shell->pids = NULL;
-	g_shell->env = NULL;
+	g_shell->env = ft_parse_env(env);
+	if (!g_shell->env)
+		ft_clean_exit();
 	signal(SIGQUIT, ft_signal);
 	signal(SIGINT, ft_signal);
 	while (1)
-		ft_prompt(env);
-	free(g_shell);
-	return (0);
+		ft_prompt();
 }

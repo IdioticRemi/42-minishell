@@ -34,7 +34,7 @@ static void	ft_check_redir_sub(char *line, int i, int *redir)
 	}
 }
 
-void	ft_check_redir(char *line, char **env)
+void	ft_check_redir(char *line)
 {
 	int	redir;
 	int	quote;
@@ -58,5 +58,5 @@ void	ft_check_redir(char *line, char **env)
 	else if (redir == 2)
 		printf("syntax error: unknown redirection path\n");
 	else
-		ft_check_pipe(line, env);
+		ft_check_pipe(line);
 }
