@@ -75,7 +75,8 @@ int		in_quote(char * cmd, int index);
 char  	*with_var(char *brut, t_env *env);
 size_t  ft_max(size_t a, size_t b);
 char	*without_quote(char * cmd);
-void 	without_quote_args(char ** argv);
+void 	without_quote_args(t_cmd *env);
+int		in_doublequote(char * cmd, int index);
 
 // Execution
 

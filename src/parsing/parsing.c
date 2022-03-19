@@ -20,7 +20,6 @@ t_cmd	*parsing(char *line)
 	if (!cmd)
 		return (NULL);
 	ft_default_cmd(cmd);
-	//printf("gsdgsgsg\n");
 	throw_cases(line, cmd);
 	//debug(cmd);
 	return (cmd);

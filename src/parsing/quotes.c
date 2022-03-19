@@ -21,9 +21,9 @@ int in_singlequote(char * cmd, int index)
 	bool_quote = 0;
 	while(i >= 0)
 	{
-		if ((cmd[i] == '\'') && bool_quote == 0)
+		if (cmd[i] == '\'' && bool_quote == 0 && in_doublequote(cmd,i) == 0)
 			bool_quote = 1;
-		else if ((cmd[i] == '\'') && bool_quote == 1)
+		else if ((cmd[i] == '\'') && bool_quote == 1 && in_doublequote(cmd,i) == 0)
 			bool_quote = 0;
 		i--;
 	}
@@ -39,9 +39,9 @@ int in_doublequote(char * cmd, int index)
 	bool_quote = 0;
 	while(i >= 0)
 	{
-		if ((cmd[i] == '"') && bool_quote == 0)
+		if ((cmd[i] == '"') && bool_quote == 0 && in_singlequote(cmd,i) == 0)
 			bool_quote = 1;
-		else if ((cmd[i] == '"') && bool_quote == 1)
+		else if ((cmd[i] == '"') && bool_quote == 1 &&  in_singlequote(cmd,i) == 0)
 			bool_quote = 0;
 		i--;
 	}
@@ -76,7 +76,7 @@ int get_next_space(char * cmd, int index)
 	int i;
 
 	i = index;
-	while (cmd[i] != '\0' && cmd[i] != ' ' && cmd[i] != '?'  && cmd[i] != '$')
+	while (cmd[i] != '\0' && cmd[i] != ' ' && cmd[i] != '?'  && cmd[i] != '$' && cmd[i] != '"' && cmd[i] != '\'')
 		i++;
 	return (i);
 }
@@ -144,7 +144,6 @@ char * with_var(char *brut, t_env *env)
 	return result;
 }
 
-
 char * without_quote(char * cmd)
 {
 	int i;
@@ -156,9 +155,10 @@ char * without_quote(char * cmd)
 	i = 0;
 	start = NULL;
 	end = NULL;
+
 	while (result[i])
 	{
-		if (result[i] == '\'' || result[i] == '"')
+		if (((result[i] == '\'' && in_doublequote(cmd, i) == 0) || (result[i] == '"' && in_singlequote(cmd, i) == 0)))
 		{
 			start = ft_substr(result, 0, i);
 			end = ft_substr(result, i + 1, ft_strlen(result) - i);
@@ -172,19 +172,33 @@ char * without_quote(char * cmd)
 	return result;
 }
 
-void without_quote_args(char ** argv)
+void without_quote_args(t_cmd *env)
 {
 	int i;
 	char *temp;
 
 	temp = NULL;
 	i = 0;
-	while (argv[i])
+	while (env->argv[i])
 	{
-		temp = ft_strdup(argv[i]);
-		free(argv[i]);
-		argv[i] = without_quote(temp);
+		temp = ft_strdup(env->argv[i]);
+		free(env->argv[i]);
+		env->argv[i] = without_quote(temp);
 		free(temp);
 		i++;
+	}
+	if (env->out)
+	{
+		temp = ft_strdup(env->out);
+		free(env->out);
+		env->out = without_quote(temp);
+		free(temp);
+	}
+	if (env->in)
+	{
+		temp = ft_strdup(env->in);
+		free(env->in);
+		env->in = without_quote(temp);
+		free(temp);
 	}
 }

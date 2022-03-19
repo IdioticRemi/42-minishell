@@ -148,7 +148,7 @@ char *conv_redir(char *cmd)
             }
             while (new[i] && (new[i] == '>' || new[i] == '<' || new[i] == ' '))
                 i++;
-            while (new[i] && new[i] != ' ')
+            while (new[i] && (new[i] != ' ' || in_quote(new, i) == 1))
                 i++;
             while (new[i] && new[i] == ' ')
                 i++;
@@ -176,7 +176,7 @@ char *get_next(char *cmd, int index)
     while (cmd[start] == ' ')
         start++;
     i = start;
-    while (cmd[i] != ' ' && cmd[i] != '\0')
+    while ((cmd[i] != ' ' || in_quote(cmd, i) == 1) && cmd[i] != '\0')
         i++;
     return(ft_substr(cmd, start, i - start));
 }
@@ -250,7 +250,8 @@ int for_rre(char *cmd, t_cmd *stru)
             close(is_open);
         if (cmd[i] == '<' && in_quote(cmd, i) == 0)
         {
-            free(path);
+			if (path)
+            	free(path);
             if (cmd[i + 1] && cmd[i + 1] == '<')
             {
                 heredoc = ft_realloc(heredoc, get_next(cmd, i + 1));
@@ -261,15 +262,19 @@ int for_rre(char *cmd, t_cmd *stru)
             else
             {
                 mode = 1;
-                path = get_next(cmd, i);
+				temp = get_next(cmd, i);
+                path = without_quote(temp); //dangereux leaks =============================================================
             }
-            is_open = open(path, O_RDONLY | O_CREAT, 0777);
+            is_open = open(path, O_RDONLY);
             if (is_open < 0)
             {
                 write(2, path, ft_strlen(path));
                 ft_putstr_fd(" : Permisson denied\n", 2);
                 return (-1);
             }
+			if (temp)
+				free(temp);
+			temp = NULL;
         }
         i++;
     }
