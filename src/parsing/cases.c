@@ -92,7 +92,7 @@ void throw_cases(char *cmd_b, t_cmd *cmd)
 	char **b_sep;
 	int i;
 
-	b_sep = ft_split(cmd_b, '|');
+	b_sep = ft_split_quote(cmd_b, '|');
 	i = 0;
 	if (!b_sep[i])
 	{

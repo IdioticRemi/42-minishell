@@ -16,6 +16,6 @@ int export_v(t_env *env, char *key, char *value)
 {
     if (!env || !key || !value)
         return (1);
-    add_env(env, key, value);
+    ft_add_env(&env, key, value);
     return (0);
 }

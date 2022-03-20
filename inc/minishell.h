@@ -138,6 +138,7 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	**ft_split(char *s, char c);
 char	*ft_itoa(int nb);
+char	**ft_split_quote(char *s, char c);
 
 // Path utils
 
