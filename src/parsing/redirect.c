@@ -134,7 +134,7 @@ char *conv_redir(char *cmd)
     new = ft_strdup(cmd);
     while (new[i])
     {
-        if ((new[i] == '>' || new[i] == '<') && in_quote(cmd, i) == 0)
+        if ((new[i] == '>' || new[i] == '<') && in_quote(cmd, i, 0) == 0)
         {
             
             start = ft_substr(new, 0, i);
@@ -148,7 +148,7 @@ char *conv_redir(char *cmd)
             }
             while (new[i] && (new[i] == '>' || new[i] == '<' || new[i] == ' '))
                 i++;
-            while (new[i] && (new[i] != ' ' || in_quote(new, i) == 1))
+            while (new[i] && (new[i] != ' ' || in_quote(new, i, 0) == 1))
                 i++;
             while (new[i] && new[i] == ' ')
                 i++;
@@ -176,7 +176,7 @@ char *get_next(char *cmd, int index)
     while (cmd[start] == ' ')
         start++;
     i = start;
-    while ((cmd[i] != ' ' || in_quote(cmd, i) == 1) && cmd[i] != '\0')
+    while ((cmd[i] != ' ' || in_quote(cmd, i, 0) == 1) && cmd[i] != '\0')
         i++;
     return(ft_substr(cmd, start, i - start));
 }
@@ -197,7 +197,7 @@ int for_re(char *cmd, t_cmd *stru)
     {
         if (is_open > 0)
             close(is_open);
-        if (cmd[i] == '>' && in_quote(cmd, i) == 0)
+        if (cmd[i] == '>' && in_quote(cmd, i, 0) == 0)
         {
             free(path);
             path = NULL;
@@ -248,7 +248,7 @@ int for_rre(char *cmd, t_cmd *stru)
     {
         if (is_open > 0)
             close(is_open);
-        if (cmd[i] == '<' && in_quote(cmd, i) == 0)
+        if (cmd[i] == '<' && in_quote(cmd, i, 0) == 0)
         {
 			if (path)
             	free(path);

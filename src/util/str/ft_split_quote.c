@@ -30,9 +30,9 @@ static int	ft_wordcount(char *s, char c)
 	{
 		while (s[i] == c)
 			i++;
-		if ((s[i] != c && in_quote(s, i) == 0 && (s[i] != '"' && s[i] != '\'')) && s[i])
+		if (((s[i] != c   &&   ((in_quote(s, i, 0) == 0 && (s[i] != '"' && s[i] != '\'')) || (in_quote(s, i, 0) == 1 && (s[i] == '"' || s[i] == '\''))  ))) && s[i])
 			wc++;
-		while (s[i] != c && s[i])
+		while ((s[i] != c  || in_quote(s, i, 0) == 1) && s[i])
 			i++;
 	}
 	return (wc);
@@ -44,7 +44,7 @@ static char	*ft_create_word(char *s, char c)
 	char	*str;
 
 	i = 0;
-	while (s[i] && (s[i] != c  || in_quote(s, i) == 1))
+	while (s[i] && (s[i] != c  || in_quote(s, i, 0) == 1))
 		i++;
 	str = ft_calloc(i + 1, 1);
 	if (!str)
@@ -68,7 +68,7 @@ char	**ft_split_quote(char *s, char c)
 	i = -1;
 	while (++i < wc)
 	{
-		while (*s == c && in_quote(s, 0) == 0)
+		while (*s == c && in_quote(s, 0, 0) == 0)
 			s++;
 		arr[i] = ft_create_word(s, c);
 		if (!arr[i])

@@ -48,13 +48,13 @@ int in_doublequote(char * cmd, int index)
 	return bool_quote;
 }
 
-int in_quote(char * cmd, int index)
+int in_quote(char * cmd, int index, int dollars)
 {
 	if (in_singlequote(cmd, index) == 1)
 		return (1);
 	else if (in_doublequote(cmd, index) == 1)
 	{
-		if (cmd[index] == '$')
+		if (dollars && cmd[index] == '$')
 			return (0);
 		return (1);
 	}
@@ -110,7 +110,7 @@ char *get_first_quotes(char *cmd_b)
 	int i;
 	
 	i = 0;
-	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n' && in_quote(cmd_b, i) == 0)
+	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n' && in_quote(cmd_b, i, 1) == 0)
 		i++;
 	return (ft_substr(cmd_b, 0, i));
 }
@@ -130,7 +130,7 @@ char * with_var(char *brut, t_env *env)
 	result = ft_strdup(brut);
 	while(result[i])
 	{
-		if (result[i] == '$' && in_quote(result, i) == 0 && result[i + 1] && result[i + 1] != ' ')
+		if (result[i] == '$' && in_quote(result, i, 1) == 0 && result[i + 1] && result[i + 1] != ' ')
 		{
 			if (i > 0)
 				tempStart = ft_substr(result, 0, i);

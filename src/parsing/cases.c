@@ -33,7 +33,7 @@ char *get_first(char *cmd_b)
 	int i;
 	
 	i = 0;
-	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n')
+	while (cmd_b[i] && (cmd_b[i] != ' ' || in_quote(cmd_b, i, 0) == 1) && cmd_b[i] != '\n')
 		i++;
 	return (ft_substr(cmd_b, 0, i));
 }
