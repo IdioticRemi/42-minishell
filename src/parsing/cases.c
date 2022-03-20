@@ -35,7 +35,6 @@ char *get_first(char *cmd_b)
 	i = 0;
 	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n')
 		i++;
-
 	return (ft_substr(cmd_b, 0, i));
 }
 
@@ -63,7 +62,7 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 
 	err = 0;
     cmd_true_true = 0;
-	temp = skip_spaces(ft_strdup(cmd_b));	
+	temp = skipSpaces(ft_strdup(cmd_b));	
 	free(cmd_b);
 	cmd_true = with_var(temp, NULL);
 	err = for_re(cmd_true, cmd);

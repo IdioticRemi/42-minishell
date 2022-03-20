@@ -108,6 +108,10 @@ size_t	ft_env_size(t_env **env);
 void	ft_add_env(t_env **env, char *key, char *value);
 char	*ft_env_join(char *key, char *value);
 void	ft_free_env(t_env *env);
+t_env	*delone_env(t_env *env, char *key);
+char	*ft_get_env(t_env *env, char *key);
+
+
 
 // Memory utils
 
@@ -139,6 +143,12 @@ char	*ft_itoa(int nb);
 
 char	*ft_pathfind(char *cmd, char **env);
 char	*ft_pathjoin(char *path, char *bin);
+
+// Built ins
+
+void 		ft_echo(char **argv);
+int 		export_v(t_env *env, char *key, char *value);
+t_env 		*unset_v(t_env *env, char *key);
 
 //debug 
 

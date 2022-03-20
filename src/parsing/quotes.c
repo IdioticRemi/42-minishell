@@ -105,6 +105,16 @@ char	*ft_own_strjoin(char *s1, char *s2)
 	return (result);
 }
 
+char *get_first_quotes(char *cmd_b)
+{
+	int i;
+	
+	i = 0;
+	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n' && in_quote(cmd_b, i) == 0)
+		i++;
+	return (ft_substr(cmd_b, 0, i));
+}
+
 char * with_var(char *brut, t_env *env)
 {
 	(void)env;
@@ -132,7 +142,7 @@ char * with_var(char *brut, t_env *env)
 			else
 			{
 				tempEnd = ft_substr(result, get_next_space(result, i + 1), ft_strlen(result) -  get_next_space(result, i));
-				tempResult = ft_own_strjoin(tempStart, ft_strdup("pr$t")); //get_env_var(brut , i)
+				tempResult = ft_own_strjoin(tempStart, ft_get_env(g_shell->env  , get_first_quotes(brut + i + 1)));
 			}
 			free(result);
 			i = ft_strlen(tempResult);
