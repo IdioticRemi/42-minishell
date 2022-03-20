@@ -65,9 +65,10 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	temp = skipSpaces(ft_strdup(cmd_b));	
 	free(cmd_b);
 	cmd_true = with_var(temp, NULL);
+
+	err = for_rre(cmd_true, cmd);
 	err = for_re(cmd_true, cmd);
-	if (err == 0)
-		err = for_rre(cmd_true, cmd);
+	
 	if (err != -1)
 	{
 		cmd_true_true = conv_redir(cmd_true);
