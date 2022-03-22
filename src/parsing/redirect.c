@@ -212,7 +212,7 @@ int for_re(char *cmd, t_cmd *stru)
                 mode = 1;
                 path = get_next(cmd, i);
             }
-            is_open = open(path, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+            is_open = open(path, O_WRONLY | O_CREAT, 0777);
             if (is_open < 0)
             {
                 write(2, path, ft_strlen(path));

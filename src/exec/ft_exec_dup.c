@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 16:23:27 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/03 11:17:24 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:16:40 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_exec_dup(t_cmd *cmd)
 	if (cmd->out)
 	{
 		out = open(cmd->out, O_WRONLY | O_CREAT | (
-					O_TRUNC * !cmd->append) | (O_APPEND * cmd->append), 0777);
+				O_TRUNC * (cmd->append != 2)) | (O_APPEND * (cmd->append == 2)), 0777);
 		if (out < 0)
 			exit(1);
 		dup2(out, STDOUT_FILENO);
