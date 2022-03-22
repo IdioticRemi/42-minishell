@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 12:06:41 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/01 12:12:18 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:32:45 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,12 @@ static int	ft_wordcount(char *s, char c)
 	{
 		while (s[i] == c)
 			i++;
-		if (((s[i] != c   &&   ((in_quote(s, i, 0) == 0 && (s[i] != '"' && s[i] != '\'')) || (in_quote(s, i, 0) == 1 && (s[i] == '"' || s[i] == '\''))  ))) && s[i])
+		if (((s[i] != c && ((in_quote(s, i, 0) == 0 && (
+								s[i] != '"' && s[i] != '\'')) || (in_quote(
+								s, i, 0) == 1 && (
+								s[i] == '"' || s[i] == '\''))))) && s[i])
 			wc++;
-		while ((s[i] != c  || in_quote(s, i, 0) == 1) && s[i])
+		while ((s[i] != c || in_quote(s, i, 0) == 1) && s[i])
 			i++;
 	}
 	return (wc);
@@ -44,7 +47,7 @@ static char	*ft_create_word(char *s, char c)
 	char	*str;
 
 	i = 0;
-	while (s[i] && (s[i] != c  || in_quote(s, i, 0) == 1))
+	while (s[i] && (s[i] != c || in_quote(s, i, 0) == 1))
 		i++;
 	str = ft_calloc(i + 1, 1);
 	if (!str)

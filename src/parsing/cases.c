@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:09:42 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 19:14:19 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:43:52 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,18 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 {
 	char *cmd_true;
 	char *cmd_true_true;
-	char * temp;
-	int err;
+	char *temp;
+	int err[2];
 
-	err = 0;
     cmd_true_true = 0;
 	temp = skipSpaces(ft_strdup(cmd_b));	
 	free(cmd_b);
 	cmd_true = with_var(temp, NULL);
 
-	err = for_rre(cmd_true, cmd);
-	err = for_re(cmd_true, cmd);
+	err[0] = for_rre(cmd_true, cmd);
+	err[1] = for_re(cmd_true, cmd);
 	
-	if (err != -1)
+	if (err[0] != -1 && err[1] != -1)
 	{
 		cmd_true_true = conv_redir(cmd_true);
 		cmd_true_true = skipSpaces(cmd_true_true);	
@@ -78,7 +77,14 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
 	}
 	else
 	{
+		cmd->argv = malloc(2 * sizeof(char *));
+		cmd->argv[0] = malloc(2);
+		cmd->argv[1] = NULL;
+		cmd->argv[0][0] = 1;
+		cmd->argv[0][1] = 0;
 		cmd->next = NULL;
+		free(cmd_true);
+		free(temp);
 		return ;
 	}
 	without_quote_args(cmd);

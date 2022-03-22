@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/17 19:48:16 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/22 17:51:25 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,20 @@ int		for_rre(char *cmd, t_cmd *stru);
 void	throw_cases(char *cmd_b, t_cmd *cmd);
 char	*conv_redir(char *cmd);
 char	**conv_args(char *b_cmd);
-char 	*get_first(char *cmd_b);
+char	*get_first(char *cmd_b);
 char	*skipSpasce(char *cmd_b);
-int 	in_quote(char * cmd, int index, int dollars);
-char  	*with_var(char *brut, t_env *env);
-size_t  ft_max(size_t a, size_t b);
-char	*without_quote(char * cmd);
-void 	without_quote_args(t_cmd *env);
-int		in_doublequote(char * cmd, int index);
+int		in_quote(char *cmd, int index, int dollars);
+char	*with_var(char *brut, t_env *env);
+size_t	ft_max(size_t a, size_t b);
+char	*without_quote(char *cmd);
+void	without_quote_args(t_cmd *env);
+int		in_doublequote(char *cmd, int index);
 
 // Execution
 
 void	ft_exec(t_cmd *cmd);
 
+//void	ft_exec_builtin(t_cmd *cmd, t_env **env);
 pid_t	ft_exec_single(t_cmd *cmd, t_env **env);
 pid_t	ft_exec_pipe(t_cmd *cmd, t_env **env);
 pid_t	ft_exec_heredoc(t_cmd *cmd);
@@ -111,8 +112,6 @@ void	ft_free_env(t_env *env);
 t_env	*delone_env(t_env *env, char *key);
 char	*ft_get_env(t_env *env, char *key);
 
-
-
 // Memory utils
 
 void	*ft_memset(void *ptr, int value, size_t n);
@@ -129,6 +128,7 @@ void	ft_putstr_fd(char *s, int fd);
 
 int		ft_chrcnt(char *str, char c);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+int		ft_strequ(char *s1, char *s2);
 size_t	ft_strlen(char *str);
 size_t	ft_strichr(char *s, int c);
 size_t	ft_strlcpy(char *dst, char *src, size_t n);
@@ -145,11 +145,14 @@ char	**ft_split_quote(char *s, char c);
 char	*ft_pathfind(char *cmd, char **env);
 char	*ft_pathjoin(char *path, char *bin);
 
-// Built ins
+// Builtins
 
-void 		ft_echo(char **argv);
-int 		export_v(t_env *env, char *key, char *value);
-t_env 		*unset_v(t_env *env, char *key);
+int		ft_is_builtin(t_cmd *cmd);
+void	ft_null(void);
+void	ft_pwd(void);
+void	ft_echo(char **argv);
+int		export_v(t_env *env, char *key, char *value);
+t_env	*unset_v(t_env *env, char *key);
 
 //debug 
 
