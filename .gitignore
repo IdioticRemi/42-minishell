@@ -1,7 +1,6 @@
 obj/
 minishell
 *.txt
-*.md
 .idea
 .vscode
 .swp
