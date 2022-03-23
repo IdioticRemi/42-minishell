@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_env.c                                     :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 18:52:17 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/17 19:27:28 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2022/03/23 20:19:43 by tjolivea          #+#    #+#             */
+/*   Updated: 2022/03/23 20:19:44 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-t_env	*ft_parse_env(char **_env)
+int	ft_isalpha(char c)
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
-
-	env = NULL;
-	i = -1;
-	while (_env[++i])
-	{
-		tmp = ft_split(_env[i], '=');
-		if (!tmp || !tmp[0])
-			return (NULL);
-		if (tmp[1])
-			ft_set_env(&env, ft_strdup(tmp[0]), ft_strdup(tmp[1]));
-		else
-			ft_set_env(&env, ft_strdup(tmp[0]), ft_strdup(""));
-		ft_afree((void **) tmp);
-	}
-	return (env);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }

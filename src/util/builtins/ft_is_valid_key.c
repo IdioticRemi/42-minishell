@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_env.c                                     :+:      :+:    :+:   */
+/*   ft_is_valid_key.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 18:52:17 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/17 19:27:28 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2022/03/23 20:21:50 by tjolivea          #+#    #+#             */
+/*   Updated: 2022/03/23 20:21:55 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_parse_env(char **_env)
+int ft_is_valid_key(char *key)
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
-
-	env = NULL;
-	i = -1;
-	while (_env[++i])
-	{
-		tmp = ft_split(_env[i], '=');
-		if (!tmp || !tmp[0])
-			return (NULL);
-		if (tmp[1])
-			ft_set_env(&env, ft_strdup(tmp[0]), ft_strdup(tmp[1]));
-		else
-			ft_set_env(&env, ft_strdup(tmp[0]), ft_strdup(""));
-		ft_afree((void **) tmp);
-	}
-	return (env);
+	if (!key || !key[0])
+		return (0);
+	if (!ft_isalpha(key[0]) && key[0] != '_')
+		return (0);
+	while (*(++key))
+		if (!ft_isalpha(*key) && !ft_isdigit(*key) && *key != '_')
+			return (0);
+	return (1);
 }

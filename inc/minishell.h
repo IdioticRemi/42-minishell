@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/22 17:51:25 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 20:22:23 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,15 @@ pid_t	ft_exec_pipe(t_cmd *cmd, t_env **env);
 pid_t	ft_exec_heredoc(t_cmd *cmd);
 void	ft_exec_dup(t_cmd *cmd);
 
+// Builtins
+
+void	ft_null(void);
+void	ft_pwd(void);
+void	ft_echo(char **argv);
+void	ft_export(char **argv, t_env **env);
+void	ft_unset(char **argv, t_env **env);
+void	ft_env(t_env **env);
+
 // Environement
 
 t_env	*ft_parse_env(char **_env);
@@ -106,10 +115,10 @@ void	ft_free_cmd(t_cmd *cmd);
 // Env struct utils
 
 size_t	ft_env_size(t_env **env);
-void	ft_add_env(t_env **env, char *key, char *value);
+void	ft_set_env(t_env **env, char *key, char *value);
 char	*ft_env_join(char *key, char *value);
 void	ft_free_env(t_env *env);
-t_env	*delone_env(t_env *env, char *key);
+void	ft_del_env(t_env **env, char *key);
 char	*ft_get_env(t_env *env, char *key);
 
 // Memory utils
@@ -123,6 +132,11 @@ void	ft_afree(void **arr);
 // IO utils
 
 void	ft_putstr_fd(char *s, int fd);
+
+// Char utils
+
+int ft_isalpha(char c);
+int ft_isdigit(char c);
 
 // Str utils
 
@@ -145,14 +159,10 @@ char	**ft_split_quote(char *s, char c);
 char	*ft_pathfind(char *cmd, char **env);
 char	*ft_pathjoin(char *path, char *bin);
 
-// Builtins
+// Builtin Utils
 
 int		ft_is_builtin(t_cmd *cmd);
-void	ft_null(void);
-void	ft_pwd(void);
-void	ft_echo(char **argv);
-int		export_v(t_env *env, char *key, char *value);
-t_env	*unset_v(t_env *env, char *key);
+int		ft_is_valid_key(char *key);
 
 //debug 
 

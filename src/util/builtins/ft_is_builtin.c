@@ -22,6 +22,8 @@ int	ft_is_builtin(t_cmd *cmd)
 		return (1);
 	if (ft_strequ(cmd->argv[0], "unset"))
 		return (1);
+	if (ft_strequ(cmd->argv[0], "env"))
+		return (1);
 	if (ft_strequ(cmd->argv[0], "pwd"))
 		return (1);
 	if (ft_strequ(cmd->argv[0], "cd"))

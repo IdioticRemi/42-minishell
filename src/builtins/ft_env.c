@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_env.c                                     :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 18:52:17 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/17 19:27:28 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2022/03/23 19:21:10 by tjolivea          #+#    #+#             */
+/*   Updated: 2022/03/23 19:23:55 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_env	*ft_parse_env(char **_env)
+void	ft_env(t_env **env)
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
+	t_env	*tmp;
 
-	env = NULL;
-	i = -1;
-	while (_env[++i])
+	tmp = *env;
+	while (tmp)
 	{
-		tmp = ft_split(_env[i], '=');
-		if (!tmp || !tmp[0])
-			return (NULL);
-		if (tmp[1])
-			ft_set_env(&env, ft_strdup(tmp[0]), ft_strdup(tmp[1]));
-		else
-			ft_set_env(&env, ft_strdup(tmp[0]), ft_strdup(""));
-		ft_afree((void **) tmp);
+		printf("%s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
 	}
-	return (env);
 }

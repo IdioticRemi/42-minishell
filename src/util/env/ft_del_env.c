@@ -6,43 +6,39 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 19:06:46 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/17 19:21:43 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/23 20:14:50 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_case(t_env *b, int head)
+static void	ft_freeone_env(t_env *env)
 {
-    free(b->key);
-    free(b->value);
-    if (!head)
-        free(b);
+	free(env->key);
+	free(env->value);
+	free(env);
 }
 
-t_env *delone_env(t_env *env, char *key)
+void	ft_del_env(t_env **env, char *key)
 {
-    t_env *tmp;
-    t_env *previous;
-    
-    previous = env;
-    if (ft_strncmp(key, previous->key, ft_strlen(env->value)) == 0) // Verifie la tete de liste, cas particulier
-    {
-        env = previous->next;
-        free_case(previous, 1);
-        return (env);
-    }
-    tmp = previous->next; // le cas n est gere on se place donc sur le cas n+1
-    while(tmp != NULL) // On Mouline est on supprime si on trouve l'element
-    {
-        if (ft_strncmp(key, tmp->key, ft_strlen(env->value)) == 0)
-        {
-            previous->next = tmp->next;
-            free_case(tmp, 0);
-            return (env);
-        }
-        previous = tmp; // pour ce souvenir dans la prochaine iteration du precedent
-        tmp = tmp->next;
-    }
-    return (env);
+	t_env	*before;
+	t_env	*tmp;
+
+	before = NULL;
+	tmp = *env;
+	while (tmp && !ft_strequ(tmp->key, key))
+	{
+		before = tmp;
+		tmp = tmp->next;
+	}
+	if (!tmp)
+		return ;
+	if (!before)
+	{
+		*env = tmp->next;
+		ft_freeone_env(tmp);
+		return ;
+	}
+	before->next = tmp->next;
+	ft_freeone_env(tmp);
 }
