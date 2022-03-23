@@ -115,9 +115,8 @@ char *get_first_quotes(char *cmd_b)
 	return (ft_substr(cmd_b, 0, i));
 }
 
-char * with_var(char *brut, t_env *env)
+char * with_var(char *brut)
 {
-	(void)env;
 	char * result;
 	char * tempResult;
 	int i;

@@ -30,12 +30,12 @@ int white_spaces(char *str)
 
 char *get_first(char *cmd_b)
 {
-	int i;
-	
-	i = 0;
-	while (cmd_b[i] && (cmd_b[i] != ' ' || in_quote(cmd_b, i, 0) == 1) && cmd_b[i] != '\n')
-		i++;
-	return (ft_substr(cmd_b, 0, i));
+			int i;
+			
+			i = 0;
+			while (cmd_b[i] && (cmd_b[i] != ' ' || in_quote(cmd_b, i, 0) == 1) && cmd_b[i] != '\n')
+				i++;
+			return (ft_substr(cmd_b, 0, i));
 }
 
 char *skipSpaces(char *cmd_b)
@@ -63,7 +63,7 @@ void fill_cmd(char *cmd_b, t_cmd *cmd)
     cmd_true_true = 0;
 	temp = skipSpaces(ft_strdup(cmd_b));	
 	free(cmd_b);
-	cmd_true = with_var(temp, NULL);
+	cmd_true = with_var(temp);
 
 	err[0] = for_rre(cmd_true, cmd);
 	err[1] = for_re(cmd_true, cmd);
