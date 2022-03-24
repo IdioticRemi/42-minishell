@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/23 20:22:23 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 15:05:49 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <termios.h>
 
 typedef struct s_env
 {		
@@ -31,14 +32,15 @@ typedef struct s_env
 }	t_env;
 
 typedef struct s_shell {
-	int		stdin;
-	int		stdout;
-	int		stderr;
-	int		status;
+	int			stdin;
+	int			stdout;
+	int			stderr;
+	int			status;
 
-	int		pid_count;
-	int		*pids;
-	t_env	*env;
+	tcflag_t	c_lflag;
+	int			pid_count;
+	int			*pids;
+	t_env		*env;
 }	t_shell;
 
 typedef struct s_cmd {
@@ -94,6 +96,7 @@ void	ft_exec_dup(t_cmd *cmd);
 
 // Builtins
 
+void	ft_exit(void);
 void	ft_null(void);
 void	ft_pwd(void);
 void	ft_echo(char **argv);
@@ -132,6 +135,8 @@ void	ft_afree(void **arr);
 // IO utils
 
 void	ft_putstr_fd(char *s, int fd);
+void	ft_termios_init(void);
+void	ft_termios_revert(void);
 
 // Char utils
 

@@ -17,7 +17,7 @@ size_t	ft_cmdsize(t_cmd *cmd)
 	size_t	i;
 
 	i = 0;
-	while (cmd)
+	while (cmd && cmd->argv)
 	{
 		cmd = cmd->next;
 		i++;
