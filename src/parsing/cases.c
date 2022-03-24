@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-int white_spaces(char *str)
+int	white_spaces(char *str)
 {
-	int i;
+	int	i;
 
 	i = ft_strlen(str);
 	if (i == 0)
@@ -28,20 +28,21 @@ int white_spaces(char *str)
 	return (i);
 }
 
-char *get_first(char *cmd_b)
+char	*get_first(char *cmd_b)
 {
-			int i;
-			
-			i = 0;
-			while (cmd_b[i] && (cmd_b[i] != ' ' || in_quote(cmd_b, i, 0) == 1) && cmd_b[i] != '\n')
-				i++;
-			return (ft_substr(cmd_b, 0, i));
+	int	i;
+
+	i = 0;
+	while (cmd_b[i] && (cmd_b[i] != ' ' || in_quote(cmd_b, i, 0) == 1) && \
+		cmd_b[i] != '\n')
+		i++;
+	return (ft_substr(cmd_b, 0, i));
 }
 
-char *skipSpaces(char *cmd_b)
+char	*skip_spaces(char *cmd_b)
 {
-	int i;
-	char *res;
+	int		i;
+	char	*res;
 
 	i = 0;
 	if (white_spaces(cmd_b) == 0)
@@ -53,51 +54,60 @@ char *skipSpaces(char *cmd_b)
 	return (res);
 }
 
-void fill_cmd(char *cmd_b, t_cmd *cmd)
+void	fill_err(t_cmd *cmd)
 {
-	char *cmd_true;
-	char *cmd_true_true;
-	char *temp;
-	int err[2];
-
-    cmd_true_true = 0;
-	temp = skipSpaces(ft_strdup(cmd_b));	
-	free(cmd_b);
-	cmd_true = with_var(temp);
-
-	err[0] = for_rre(cmd_true, cmd);
-	err[1] = for_re(cmd_true, cmd);
-	
-	if (err[0] != -1 && err[1] != -1)
-	{
-		cmd_true_true = conv_redir(cmd_true);
-		cmd_true_true = skipSpaces(cmd_true_true);	
-		cmd->argv = conv_args(cmd_true_true);
-		cmd->argv[0] = get_first(cmd_true_true);
-	}
-	else
-	{
 		cmd->argv = malloc(2 * sizeof(char *));
 		cmd->argv[0] = malloc(2);
 		cmd->argv[1] = NULL;
 		cmd->argv[0][0] = 1;
 		cmd->argv[0][1] = 0;
 		cmd->next = NULL;
-		free(cmd_true);
-		free(temp);
+}
+
+void	free_multiple(char *one, char *two, char *tree, char *four)
+{
+	if (one)
+		free(one);
+	if (two)
+		free(two);
+	if (tree)
+		free(tree);
+	if (four)
+		free(four);
+}
+
+void	fill_cmd(char *cmd_b, t_cmd *cmd)
+{
+	char	*cmd_true;
+	char	*cmd_true_true;
+	char	*temp;
+	int		err[2];
+
+	cmd_true_true = 0;
+	temp = skip_spaces(ft_strdup(cmd_b));
+	free(cmd_b);
+	cmd_true = with_var(temp);
+	err[0] = for_rre(cmd_true, cmd);
+	err[1] = for_re(cmd_true, cmd);
+	if (err[0] == -1 && err[1] == -1)
+	{
+		fill_err(cmd);
+		free_multiple(cmd_true, temp, NULL, NULL);
 		return ;
 	}
+	cmd_true_true = conv_redir(cmd_true);
+	cmd_true_true = skip_spaces(cmd_true_true);
+	cmd->argv = conv_args(cmd_true_true);
+	cmd->argv[0] = get_first(cmd_true_true);
 	without_quote_args(cmd);
-	free(cmd_true_true);
-	free(cmd_true);
-	free(temp);
+	free_multiple(cmd_true_true, cmd_true, temp, NULL);
 	cmd->next = NULL;
 }
 
-void throw_cases(char *cmd_b, t_cmd *cmd)
+void	throw_cases(char *cmd_b, t_cmd *cmd)
 {
-	char **b_sep;
-	int i;
+	char	**b_sep;
+	int		i;
 
 	b_sep = ft_split_quote(cmd_b, '|');
 	i = 0;

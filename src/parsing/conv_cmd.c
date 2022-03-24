@@ -12,42 +12,27 @@
 
 #include "minishell.h"
 
-int count_arg(char *b_cmd)
+int	count_arg(char *b_cmd, int i)
 {
-	int i;
-	int count;
-	int temp;
+	int	count;
 
 	count = 0;
-	i = 0;
 	while (b_cmd[i])
 	{
-		if (i > 0 && b_cmd[i - 1] && b_cmd[i - 1] == ' ' && b_cmd[i] != ' ' && b_cmd[i] != '-')
+		if (i > 0 && b_cmd[i - 1] && (b_cmd[i - 1] == ' '
+				&& in_quote(b_cmd, i - 1, 0) == 0) && b_cmd[i] != ' '
+			&& b_cmd[i] != '-')
 		{
 			count++;
 			i++;
 		}
-		else if (b_cmd[i] == '-')
+		else if (b_cmd[i] == '-' && in_quote(b_cmd, i, 0) == 0)
 		{
-			if (b_cmd[i + 1] && b_cmd[i + 1] == '-')
-			{
-				i += 2;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
-					i++;
-				count++;
-			}
-			else
-			{
+			i++;
+			while (b_cmd[i] && (b_cmd[i] != '\0'
+					&& b_cmd[i] != ' ' && b_cmd[i] != '\n'))
 				i++;
-				temp = count;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
-				{
-					i++;
-					count++;
-				}
-				if (count == temp)
-					count++;
-			}
+			count++;
 		}
 		else
 			i++;
@@ -55,35 +40,42 @@ int count_arg(char *b_cmd)
 	return (count);
 }
 
-char **conv_args(char *b_cmd)
+int	arg_check(char *b_cmd, int i)
 {
-	char **args;
-	int i;
-	int y;
-	int start;
- 
+	if ((i > 0 && b_cmd[i - 1] && (b_cmd[i - 1] == ' '
+				&& in_quote(b_cmd, i - 1, 0) == 0)
+			&& b_cmd[i] != ' ' && b_cmd[i] != '-'))
+		return (1);
+	return (0);
+}
+
+int	arg_tirret(char *b_cmd, int i)
+{
+	if (b_cmd[i] == '-' && in_quote(b_cmd, i, 0) == 0)
+		return (1);
+	return (0);
+}
+
+char	**conv_args(char *b_cmd)
+{
+	char	**args;
+	int		i;
+	int		y;
+	int		start;
+
 	y = 1;
 	i = 0;
-	args = malloc(sizeof(char *) * (count_arg(b_cmd) + 2));
-	if (args == NULL)
-		return (NULL);
+	args = malloc(sizeof(char *) * (count_arg(b_cmd, 0) + 2));
 	while (b_cmd[i])
 	{
-		if (i > 0 && b_cmd[i - 1] && (b_cmd[i - 1] == ' ' && in_quote(b_cmd, i - 1, 0) == 0) && b_cmd[i] != ' ' && b_cmd[i] != '-')
+		if (arg_check(b_cmd, i) == 1 || arg_tirret(b_cmd, i) == 1)
 		{
 			start = i;
-			while (b_cmd[i] && (b_cmd[i] != '\0' && (b_cmd[i] != ' ' || in_quote(b_cmd, i, 0) == 1) && b_cmd[i] != '\n'))
+			while (b_cmd[i] && (b_cmd[i] != '\0' && (b_cmd[i] != ' ' || \
+				in_quote(b_cmd, i, 0) == 1) && b_cmd[i] != '\n'))
 				i++;
 			args[y] = ft_substr(b_cmd, start, i - start);
 			y++;
-		}
-		else if (b_cmd[i] == '-' && in_quote(b_cmd, i, 0) == 0)
-		{
-				start = i;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
-					i++;
-				args[y] = ft_substr(b_cmd, start, i - start);
-				y++;
 		}
 		else
 			i++;
