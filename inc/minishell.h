@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 15:43:25 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:32:28 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_exec_dup(t_cmd *cmd);
 
 // Builtins
 
-void	ft_exit(void);
+void	ft_exit(t_cmd *cmd);
 void	ft_null(void);
 void	ft_pwd(void);
 void	ft_echo(char **argv);

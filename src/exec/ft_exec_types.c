@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:54:32 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 14:21:57 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 14:22:06 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_exec_builtin(t_cmd *cmd, t_env **env)
 	if (cmd->argv[0][0] == 1)
 		ft_null();
 	else if (ft_strequ(cmd->argv[0], "exit"))
-		ft_exit();
+		ft_exit(cmd);
 	else if (ft_strequ(cmd->argv[0], "echo"))
 		ft_echo(cmd->argv);
 	else if (ft_strequ(cmd->argv[0], "export"))
