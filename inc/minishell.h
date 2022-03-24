@@ -107,6 +107,7 @@ void	ft_env(t_env **env);
 // Environement
 
 t_env	*ft_parse_env(char **_env);
+char	**ft_env_to_key_array(t_env **env);
 char	**ft_env_to_array(t_env **env);
 
 // Cmd struct utils
