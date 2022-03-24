@@ -117,8 +117,9 @@ char * heredoc_c(char **end, t_cmd *stru)
 		free(temp);
     }
     stru->heredoc = 1;
-
     ft_afree((void **)end);
+    if (!final_line)
+        return(ft_strdup(""));
     return (final_line);
 }
 
