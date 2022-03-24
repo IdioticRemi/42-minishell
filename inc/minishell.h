@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 15:05:49 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 15:43:03 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ char	*ft_strdup(char *src);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	**ft_split(char *s, char c);
-char	*ft_itoa(int nb);
+int		ft_atoi(const char *nptr);
+char	*ft_itoa(int nbr);
 char	**ft_split_quote(char *s, char c);
 
 // Path utils

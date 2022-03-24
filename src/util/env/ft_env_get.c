@@ -20,7 +20,5 @@ char	*ft_get_env(t_env *env, char *key)
 			return (ft_strdup(env->value));
 		env = env->next;
 	}
-	if (key)
-		free(key);
-	return (ft_strdup(""));
+	return (NULL);
 }

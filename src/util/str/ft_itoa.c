@@ -6,49 +6,48 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:09:43 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/07 16:10:12 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/24 15:42:06 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	int_count(int nb)
+static long	ft_abs(long x)
 {
-	int	count;
-
-	count = 0;
-	if (nb < 0)
-		count++;
-	while (nb / 10)
-	{
-		count++;
-		nb /= 10;
-	}
-	return (count + 1);
+	return ((x < 0) * -x + (x >= 0) * x);
 }
 
-char	*ft_itoa(int nb)
+static size_t	ft_nbrlen(int n)
 {
-	char			*result;
-	int				index;
+	size_t	len;
 
-	if (nb == -2147483648)
-		return (ft_strdup("-2147483648"));
-	index = int_count(nb);
-	result = malloc(sizeof(char) * int_count(nb) + 1);
-	if (result == NULL)
-		return (NULL);
-	result[index] = '\0';
-	if (nb < 0)
-		result[0] = '-';
-	while (nb / 10)
+	len = 1 + (n < 0);
+	while (n / 10)
 	{
-		result[index - 1] = ((nb % 10) >= 0) * (nb % 10)
-			+ ((nb % 10) < 0) * -(nb % 10) + '0';
-		index--;
-		nb /= 10;
+		n /= 10;
+		len++;
 	}
-	result[index - 1] = ((nb % 10) >= 0) * (nb % 10)
-		+ ((nb % 10) < 0) * -(nb % 10) + '0';
-	return (result);
+	return (len);
+}
+
+char	*ft_itoa(int n)
+{
+	size_t	n_len;
+	long	x;
+	char	*str;
+
+	x = n;
+	n_len = ft_nbrlen(n);
+	str = malloc(n_len + 1);
+	if (!str)
+		return (0);
+	str[n_len] = '\0';
+	if (x < 0)
+		str[0] = '-';
+	while (n_len > (n < 0))
+	{
+		str[--n_len] = ft_abs(x % 10) + '0';
+		x /= 10;
+	}
+	return (str);
 }

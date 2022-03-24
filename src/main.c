@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 15:07:57 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:01:11 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	ft_signal(int sig)
 	}
 	empty = ft_calloc(1, 1);
 	if (sig == SIGQUIT)
-		return;
+		return ;
 	write(1, "\n", 1);
 	rl_replace_line(empty, 0);
 	rl_on_new_line();
@@ -71,6 +71,8 @@ int	main(int ac, char **argv, char **env)
 	g_shell->env = ft_parse_env(env);
 	if (!g_shell->env)
 		ft_clean_exit();
+	ft_set_env(&g_shell->env, ft_strdup("SHLVL"), ft_itoa(
+			ft_atoi(ft_get_env(g_shell->env, "SHLVL")) + 1));
 	ft_termios_init();
 	signal(SIGQUIT, ft_signal);
 	signal(SIGINT, ft_signal);
