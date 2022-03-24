@@ -56,7 +56,7 @@ char * set_s(char *line, char *cmd_final, int isInquote)
     temp2 = NULL;
     if (isInquote == 0)
     {
-        temp2 = with_var(line); //env
+        temp2 = with_var(line, NULL, NULL, 0); //env
         temp = ft_strjoin(temp2, "\n");
     }
     else
