@@ -6,20 +6,26 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 19:10:14 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 14:34:09 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:11:51 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//
+
 //static void	ft_putenv(char *key, char *value)
 //{
-//	printf("declare -x %s=%s", key, value);
+//	printf("declare -x %s=%s\n", key, value);
 //}
 
 static void	ft_export_print(t_env **env)
 {
-	(void) env;
+	t_env	*start;
+	t_env	*tmp;
+
+	start = *env;
+	tmp = *env;
+	(void) start;
+	(void) tmp;
 }
 
 void	ft_export(char **argv, t_env **env)

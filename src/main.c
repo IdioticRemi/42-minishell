@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 16:01:11 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:19:24 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static void	ft_signal(int sig)
 
 int	main(int ac, char **argv, char **env)
 {
+	char	*shlvl;
+
 	(void) ac;
 	(void) argv;
 	g_shell = malloc(sizeof(t_shell));
@@ -71,8 +73,10 @@ int	main(int ac, char **argv, char **env)
 	g_shell->env = ft_parse_env(env);
 	if (!g_shell->env)
 		ft_clean_exit();
+	shlvl = ft_get_env(g_shell->env, "SHLVL");
 	ft_set_env(&g_shell->env, ft_strdup("SHLVL"), ft_itoa(
-			ft_atoi(ft_get_env(g_shell->env, "SHLVL")) + 1));
+			ft_atoi(shlvl) + 1));
+	free(shlvl);
 	ft_termios_init();
 	signal(SIGQUIT, ft_signal);
 	signal(SIGINT, ft_signal);
