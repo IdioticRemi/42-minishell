@@ -171,7 +171,8 @@ char * without_quote(char * cmd)
 
 	while (result[i])
 	{
-		if (((result[i] == '\'' && in_doublequote(cmd, i) == 0) || (result[i] == '"' && in_singlequote(cmd, i) == 0)))
+		if (((result[i] == '\'' && in_doublequote(cmd, i) == 0)
+			|| (result[i] == '"' && in_singlequote(cmd, i) == 0)))
 		{
 			start = ft_substr(result, 0, i);
 			end = ft_substr(result, i + 1, ft_strlen(result) - i);
@@ -185,6 +186,17 @@ char * without_quote(char * cmd)
 	return result;
 }
 
+
+void without_quote_thing(char ** thing)
+{
+	char *temp;
+
+	temp = ft_strdup(*thing);
+	free(*thing);
+	*thing = without_quote(temp);
+	free(temp);
+}
+
 void without_quote_args(t_cmd *env)
 {
 	int i;
@@ -194,24 +206,11 @@ void without_quote_args(t_cmd *env)
 	i = 0;
 	while (env->argv[i])
 	{
-		temp = ft_strdup(env->argv[i]);
-		free(env->argv[i]);
-		env->argv[i] = without_quote(temp);
-		free(temp);
+		without_quote_thing(&env->argv[i]);
 		i++;
 	}
 	if (env->out)
-	{
-		temp = ft_strdup(env->out);
-		free(env->out);
-		env->out = without_quote(temp);
-		free(temp);
-	}
+		without_quote_thing(&env->out);
 	if (env->in)
-	{
-		temp = ft_strdup(env->in);
-		free(env->in);
-		env->in = without_quote(temp);
-		free(temp);
-	}
+		without_quote_thing(&env->in);
 }

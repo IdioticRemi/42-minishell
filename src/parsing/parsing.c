@@ -14,13 +14,12 @@
 
 t_cmd	*parsing(char *line)
 {
-	t_cmd *cmd;
+	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
 	ft_default_cmd(cmd);
 	throw_cases(line, cmd);
-	//debug(cmd);
 	return (cmd);
 }
