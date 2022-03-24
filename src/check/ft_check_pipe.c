@@ -6,11 +6,27 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 16:06:52 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/17 19:47:45 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:37:12 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	ft_handle(char *line, int hpipe)
+{
+	t_cmd	*cmd;
+
+	if (hpipe == 1)
+		printf("syntax error: unexpected pipe operator\n");
+	else if (hpipe == 2)
+		printf("syntax error: unexpected end of line\n");
+	else
+	{
+		cmd = parsing(line);
+		free(line);
+		ft_exec(cmd);
+	}
+}
 
 static void	ft_check_pipe_sub(char *line, int i, int *hpipe)
 {
@@ -53,10 +69,5 @@ void	ft_check_pipe(char *line)
 			continue ;
 		ft_check_pipe_sub(line, i, &hpipe);
 	}
-	if (hpipe == 1)
-		printf("syntax error: unexpected pipe operator\n");
-	else if (hpipe == 2)
-		printf("syntax error: unexpected end of line\n");
-	else
-		ft_exec(parsing(line));
+	ft_handle(line, hpipe);
 }

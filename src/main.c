@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 16:19:24 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:40:29 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	ft_prompt(void)
 	}
 	add_history(line);
 	ft_check(line);
-	free(line);
 }
 
 static void	ft_signal(int sig)
