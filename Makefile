@@ -1,5 +1,6 @@
 # Program name
 NAME	= minishell
+NAME^^	= $(shell echo $(NAME) | tr 'a-z' 'A-Z')
 
 # Directories
 
@@ -23,36 +24,41 @@ LIBS	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.br
 
 # Color
 
+RESET	= \033[0;0m
+FG_WHIT	= \033[0;97m
+FG_GRAY	= \033[0;37m
 FG_MAGE	= \033[0;35m
 FG_CYAN	= \033[0;36m
-FG_WHIT	= \033[0;37m
 FG_GREE	= \033[0;32m
+FG_REDD	= \033[0;32m
 
 # Rules
 all: log $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_DIR)/$(NAME).h
 	@mkdir -p $(OBJ_DIR) $(SUBDIRS)
+	@printf "$(FG_GRAY)[ $(NAME^^) ] $(FG_WHIT)$@ $(FG_CYAN)\033[60G[.]$(RESET)\r"
 	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-	@printf "."
+	@printf "$(FG_GRAY)[ $(NAME^^) ] $(FG_WHIT)$@ $(FG_GREE)\033[60G[✓]$(RESET)\n"
 
 $(NAME): $(OBJS)
-	@printf " [$(words $(OBJS))]\n"
 	@$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) -o $(NAME) $(LIBS)
-	@printf "$(FG_WHIT)[ MINISHELL ] $(FG_GREE)Built '$(NAME)'.$(FG_WHIT)\n"
+	@printf "$(FG_GRAY)[ $(NAME^^) ] $(FG_GREE)Built '$(NAME)'.$(RESET)\n"
 
 log:
-	@printf "$(FG_WHIT)[ MINISHELL ] $(FG_CYAN)Starting build process.$(FG_WHIT)\n"
+	@printf "$(FG_GRAY)[ $(NAME^^) ] $(FG_CYAN)Starting build process.$(RESET)\n"
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@printf "$(FG_WHIT)[ MINISHELL ] $(FG_MAGE)Build objects cleaned.$(FG_WHIT)\n"
+	@printf "$(FG_GRAY)[ $(NAME^^) ] $(FG_MAGE)Build objects cleaned.$(RESET)\n"
 
 fclean:
 	@rm -rf $(NAME) $(OBJ_DIR)
-	@printf "$(FG_WHIT)[ MINISHELL ] $(FG_MAGE)Program files cleaned.$(FG_WHIT)\n"
+	@printf "$(FG_GRAY)[ $(NAME^^) ] $(FG_MAGE)Program files cleaned.$(RESET)\n"
 
 norm:
 	@norminette $(SRC_DIR) $(INC_DIR)
 
 re: fclean all
+
+.PHONY: all log clean fclean norm re
