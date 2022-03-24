@@ -87,7 +87,9 @@ char	*ft_own_strjoin(char *s1, char *s2)
 	char	*result;
 	int		size;
 
-	if (!s1)
+	if (!s1 && !s2)
+		return (ft_strdup(""));
+	else if (!s1)
 		return (s2);
 	else if (!s2)
 		return (s1);
