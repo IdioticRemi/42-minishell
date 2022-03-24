@@ -61,7 +61,6 @@ char **conv_args(char *b_cmd)
 	int i;
 	int y;
 	int start;
-	char *temp;
  
 	y = 1;
 	i = 0;
@@ -80,26 +79,11 @@ char **conv_args(char *b_cmd)
 		}
 		else if (b_cmd[i] == '-' && in_quote(b_cmd, i, 0) == 0)
 		{
-			if (b_cmd[i + 1] && b_cmd[i + 1] == '-')
-			{
 				start = i;
 				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
 					i++;
 				args[y] = ft_substr(b_cmd, start, i - start);
 				y++;
-			}
-			else
-			{
-				i++;
-				while (b_cmd[i] && (b_cmd[i] != '\0' && b_cmd[i] != ' ' && b_cmd[i] != '\n'))
-				{
-					temp = ft_substr(b_cmd, i, 1);
-					args[y] = ft_strjoin("-", temp);
-					free(temp);
-					y++;
-					i++;
-				}
-			}
 		}
 		else
 			i++;

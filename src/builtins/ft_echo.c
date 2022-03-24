@@ -15,13 +15,24 @@
 void	ft_echo(char **argv)
 {
 	int	i;
+	int fullN;
 	int	newline;
 
 	newline = 1;
 	i = 1;
-	while (argv[i] && ft_strequ(argv[i], "-n"))
+	fullN = 1;
+	while (argv[i] && ft_strncmp(argv[i], "-n", 2) == 0)
 	{
 		newline = 0;
+		while (argv[i][fullN])
+		{
+			if (argv[i][fullN] != 'n')
+				newline = 1;
+			fullN++;
+		}
+		if (newline == 1)
+			break;
+		fullN = 1;
 		i++;
 	}
 	while (argv[i])
