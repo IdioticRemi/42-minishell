@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:09:42 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 14:05:37 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:22:07 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 void	ft_echo(char **argv)
 {
 	int	i;
-	int fullN;
+	int	full_n;
 	int	newline;
 
 	newline = 1;
 	i = 1;
-	fullN = 1;
+	full_n = 1;
 	while (argv[i] && ft_strncmp(argv[i], "-n", 2) == 0)
 	{
 		newline = 0;
-		while (argv[i][fullN])
+		while (argv[i][full_n])
 		{
-			if (argv[i][fullN] != 'n')
+			if (argv[i][full_n] != 'n')
 				newline = 1;
-			fullN++;
+			full_n++;
 		}
 		if (newline == 1)
-			break;
-		fullN = 1;
+			break ;
+		full_n = 1;
 		i++;
 	}
 	while (argv[i])

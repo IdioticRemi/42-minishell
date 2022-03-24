@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int ft_is_valid_key(char *key)
+int	ft_is_valid_key(char *key)
 {
 	if (!key || !key[0])
 		return (0);

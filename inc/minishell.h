@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 15:43:03 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 15:43:25 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ void	ft_termios_revert(void);
 
 // Char utils
 
-int ft_isalpha(char c);
-int ft_isdigit(char c);
+int		ft_isalpha(char c);
+int		ft_isdigit(char c);
 
 // Str utils
 

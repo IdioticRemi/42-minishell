@@ -38,7 +38,7 @@ static void	ft_replace(t_env **env, char *key, char *new_val)
 		tmp = tmp->next;
 	}
 	if (!tmp)
-		return;
+		return ;
 	free(tmp->value);
 	tmp->value = new_val;
 }
