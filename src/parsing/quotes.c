@@ -141,7 +141,9 @@ char * with_var(char *brut)
 			else
 			{
 				tempEnd = ft_substr(result, get_next_space(result, i + 1), ft_strlen(result) -  get_next_space(result, i));
-				tempResult = ft_own_strjoin(tempStart, ft_get_env(g_shell->env  , get_first_quotes(brut + i + 1)));
+				free(result);
+				result = get_first_quotes(brut + i + 1);
+				tempResult = ft_own_strjoin(tempStart, ft_get_env(g_shell->env  , result));
 			}
 			free(result);
 			i = ft_strlen(tempResult);

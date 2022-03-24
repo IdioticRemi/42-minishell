@@ -113,6 +113,7 @@ char * heredoc_c(char **end, t_cmd *stru)
             bool_quote = 0;
         if (end[i])
             final_line = set_s(line, final_line, bool_quote);
+        free(line);
 		free(temp);
     }
     stru->heredoc = 1;
