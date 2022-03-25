@@ -6,13 +6,13 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 19:10:14 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 23:53:03 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 00:15:45 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_putenv(t_env **env, char **keys)
+static int	ft_putenv(t_env **env, char **keys)
 {
 	char	*value;
 	int		i;
@@ -25,9 +25,10 @@ static void	ft_putenv(t_env **env, char **keys)
 		free(value);
 	}
 	ft_afree((void **) keys);
+	return (0);
 }
 
-static void	ft_export_print(t_env **env)
+static int	ft_export_print(t_env **env)
 {
 	char	**keys;
 	char	*tmp;
@@ -53,33 +54,33 @@ static void	ft_export_print(t_env **env)
 			}
 		}
 	}
-	ft_putenv(env, keys);
+	return (ft_putenv(env, keys));
 }
 
-void	ft_export(char **argv, t_env **env)
+int	ft_export(char **argv, t_env **env)
 {
 	char	*key;
 	char	*val;
 	int		i;
 
-	if (!argv)
-		return ;
 	if (!argv[1])
-	{
-		ft_export_print(env);
-		return ;
-	}
+		return (ft_export_print(env));
 	key = &argv[1][0];
 	i = 0;
 	while (argv[1][i] && argv[1][i] != '=')
 		i++;
 	if (!argv[1][i])
-		return ;
+		return (0);
 	argv[1][i] = '\0';
 	val = &argv[1][i + 1];
-	if (!ft_is_valid_key(key))
-		ft_putstr_fd("Invalid key name.\n", 1);
-	else
+	if (ft_is_valid_key(key))
 		ft_set_env(env, ft_strdup(key), ft_strdup(val));
+	else
+	{
+		ft_putstr_fd("Invalid key name.\n", 1);
+		argv[1][i] = '=';
+		return (1);
+	}
 	argv[1][i] = '=';
+	return (0);
 }

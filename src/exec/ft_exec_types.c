@@ -6,29 +6,29 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:54:32 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 14:22:06 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 00:59:25 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_exec_builtin(t_cmd *cmd, t_env **env)
+static int	ft_exec_builtin(t_cmd *cmd, t_env **env)
 {
 	if (cmd->argv[0][0] == 1)
-		ft_null();
+		return(ft_null());
 	else if (ft_strequ(cmd->argv[0], "exit"))
-		ft_exit(cmd);
+		return(ft_exit(cmd));
 	else if (ft_strequ(cmd->argv[0], "echo"))
-		ft_echo(cmd->argv);
+		return(ft_echo(cmd->argv));
 	else if (ft_strequ(cmd->argv[0], "export"))
-		ft_export(cmd->argv, env);
+		return(ft_export(cmd->argv, env));
 	else if (ft_strequ(cmd->argv[0], "unset"))
-		ft_unset(cmd->argv, env);
+		return(ft_unset(cmd->argv, env));
 	else if (ft_strequ(cmd->argv[0], "env"))
-		ft_env(env);
+		return(ft_env(env));
 	else if (ft_strequ(cmd->argv[0], "pwd"))
-		ft_pwd();
-	(void) env;
+		return(ft_pwd());
+	return (1);
 }
 
 static void	ft_exec_cmd(t_cmd *cmd, t_env **env)
@@ -37,10 +37,7 @@ static void	ft_exec_cmd(t_cmd *cmd, t_env **env)
 	char	*path;
 
 	if (ft_is_builtin(cmd))
-	{
-		ft_exec_builtin(cmd, env);
-		exit(0);
-	}
+		exit(ft_exec_builtin(cmd, env));
 	_env = ft_env_to_array(env);
 	if (ft_strchr(cmd->argv[0], '/'))
 		path = cmd->argv[0];
@@ -60,7 +57,7 @@ pid_t	ft_exec_single(t_cmd *cmd, t_env **env)
 	if (ft_is_builtin(cmd))
 	{
 		ft_exec_dup(cmd);
-		ft_exec_builtin(cmd, env);
+		g_shell->status = ft_exec_builtin(cmd, env);
 		dup2(g_shell->stdin, STDIN_FILENO);
 		dup2(g_shell->stderr, STDERR_FILENO);
 		dup2(g_shell->stdout, STDOUT_FILENO);
@@ -118,6 +115,8 @@ pid_t	ft_exec_heredoc(t_cmd *cmd)
 		close(files[1]);
 		return (pid);
 	}
+	if (!cmd->in)
+		cmd->in = ft_strdup("");
 	pid = write(files[1], cmd->in, ft_strlen(cmd->in));
 	close(files[0]);
 	close(files[1]);

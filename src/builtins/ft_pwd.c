@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	pwd[512 + 1];
 
 	getcwd(pwd, 512);
 	ft_putstr_fd(pwd, 1);
 	ft_putstr_fd("\n", 1);
+	return (0);
 }
