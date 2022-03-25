@@ -78,7 +78,7 @@ char	**conv_args(char *b_cmd);
 char	*get_first(char *cmd_b);
 char	*skipSpasce(char *cmd_b);
 int		in_quote(char *cmd, int index, int dollars);
-char	*with_var(char *brut);
+char	*with_var(char *brut, char *tempStart, char *tempEnd, int i);
 size_t	ft_max(size_t a, size_t b);
 char	*without_quote(char *cmd);
 void	without_quote_args(t_cmd *env);

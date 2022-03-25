@@ -12,43 +12,45 @@
 
 #include "minishell.h"
 
-int in_singlequote(char * cmd, int index)
+int	in_singlequote(char *cmd, int index)
 {
-	int i;
-	int bool_quote;
+	int	i;
+	int	bool_quote;
 
 	i = index;
 	bool_quote = 0;
-	while(i >= 0)
+	while (i >= 0)
 	{
-		if (cmd[i] == '\'' && bool_quote == 0 && in_doublequote(cmd,i) == 0)
+		if (cmd[i] == '\'' && bool_quote == 0 && in_doublequote(cmd, i) == 0)
 			bool_quote = 1;
-		else if ((cmd[i] == '\'') && bool_quote == 1 && in_doublequote(cmd,i) == 0)
+		else if ((cmd[i] == '\'') && bool_quote == 1
+			&& in_doublequote(cmd, i) == 0)
 			bool_quote = 0;
 		i--;
 	}
-	return bool_quote;
+	return (bool_quote);
 }
 
-int in_doublequote(char * cmd, int index)
+int	in_doublequote(char *cmd, int index)
 {
-	int i;
-	int bool_quote;
+	int	i;
+	int	bool_quote;
 
 	i = index;
 	bool_quote = 0;
-	while(i >= 0)
+	while (i >= 0)
 	{
-		if ((cmd[i] == '"') && bool_quote == 0 && in_singlequote(cmd,i) == 0)
+		if ((cmd[i] == '"') && bool_quote == 0 && in_singlequote(cmd, i) == 0)
 			bool_quote = 1;
-		else if ((cmd[i] == '"') && bool_quote == 1 &&  in_singlequote(cmd,i) == 0)
+		else if ((cmd[i] == '"') && bool_quote == 1
+			&& in_singlequote(cmd, i) == 0)
 			bool_quote = 0;
 		i--;
 	}
-	return bool_quote;
+	return (bool_quote);
 }
 
-int in_quote(char * cmd, int index, int dollars)
+int	in_quote(char *cmd, int index, int dollars)
 {
 	if (in_singlequote(cmd, index) == 1)
 		return (1);
@@ -61,7 +63,7 @@ int in_quote(char * cmd, int index, int dollars)
 	return (0);
 }
 
-void reset_temp(char * start, char * end)
+void	reset_temp(char *start, char *end)
 {
 	if (start)
 		free(start);
@@ -71,16 +73,16 @@ void reset_temp(char * start, char * end)
 	start = NULL;
 }
 
-int get_next_space(char * cmd, int index)
+int	get_next_space(char *cmd, int index)
 {
-	int i;
+	int	i;
 
 	i = index;
-	while (cmd[i] != '\0' && cmd[i] != ' ' && cmd[i] != '?'  && cmd[i] != '$' && cmd[i] != '"' && cmd[i] != '\'')
+	while (cmd[i] != '\0' && cmd[i] != ' ' && cmd[i] != '?'
+		&& cmd[i] != '$' && cmd[i] != '"' && cmd[i] != '\'')
 		i++;
 	return (i);
 }
-
 
 char	*ft_own_strjoin(char *s1, char *s2)
 {
@@ -88,7 +90,7 @@ char	*ft_own_strjoin(char *s1, char *s2)
 	int		size;
 
 	if (!s1 && !s2)
-		return (ft_strdup(""));
+		return (ft_strdup("  "));
 	else if (!s1)
 		return (s2);
 	else if (!s2)
@@ -107,72 +109,102 @@ char	*ft_own_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-char *get_first_quotes(char *cmd_b)
+char	*get_first_quotes(char *cmd_b)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n' && in_quote(cmd_b, i, 1) == 0)
+	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n'
+		&& in_quote(cmd_b, i, 1) == 0)
 		i++;
 	return (ft_substr(cmd_b, 0, i));
 }
 
-char * with_var(char *brut)
+void	cut_var(char *brut, int i, char **result, char **tempEnd)
 {
-	char * result;
-	char * tempResult;
-	int i;
-	char * tempStart;
-	char * tempEnd;
+	*tempEnd = ft_substr(*result, get_next_space(*result, \
+		i + 1), ft_strlen(*result) - get_next_space(*result, i));
+	free(*result);
+	*result = get_first_quotes(brut + i + 1);
+}
 
-	tempStart = NULL;
-	tempEnd = NULL;
-	i = 0;
+int	check_is_var(char *result, int i)
+{
+	if (result[i] == '$' && in_quote(result, i, 1) == 0
+		&& result[i + 1] && result[i + 1] != ' ')
+		return (1);
+	return (0);
+}
+
+void	set_start(char **result, int i, char **tempStart)
+{
+	if (i > 0)
+		*tempStart = ft_substr(*result, 0, i);
+}
+
+void	rest_while(char **tempEnd, int *i, char **result, char **tempResult)
+{
+	free(*result);
+	*i = ft_strlen(*tempResult) - 1;
+	*result = ft_own_strjoin(*tempResult, *tempEnd);
+}
+
+void	set_temp_end(char **result, int i, char **tempEnd)
+{
+	*tempEnd = ft_substr(*result, get_next_space(*result, i + 1) + 1,
+			ft_strlen(*result) - (get_next_space(*result, i + 1) + 1));
+}
+
+void	set_temp_result(char **result, char **tempStart, char **tempResult)
+{
+	*tempResult = ft_own_strjoin(*tempStart,
+			ft_get_env(g_shell->env, *result));
+}
+
+char	*with_var(char *brut, char *tempStart, char *tempEnd, int i)
+{
+	char	*result;
+	char	*temp_result;
+
 	result = ft_strdup(brut);
-	while(result[i])
+	while (result[i])
 	{
-		if (result[i] == '$' && in_quote(result, i, 1) == 0 && result[i + 1] && result[i + 1] != ' ')
+		if (check_is_var(result, i) == 1)
 		{
-			if (i > 0)
-				tempStart = ft_substr(result, 0, i);
+			set_start(&result, i, &tempStart);
 			if (result[i + 1] == '?')
 			{
-				tempResult = ft_own_strjoin(tempStart, ft_itoa(g_shell->status));
-				tempEnd = ft_substr(result, get_next_space(result, i + 1) + 1, ft_strlen(result) -  (get_next_space(result, i + 1) + 1));
+				temp_result = ft_own_strjoin(tempStart,
+						ft_itoa(g_shell->status));
+				set_temp_end(&result, i, &tempEnd);
 			}
 			else
 			{
-				tempEnd = ft_substr(result, get_next_space(result, i + 1), ft_strlen(result) -  get_next_space(result, i));
-				free(result);
-				result = get_first_quotes(brut + i + 1);
-				tempResult = ft_own_strjoin(tempStart, ft_get_env(g_shell->env  , result));
+				cut_var(brut, i, &result, &tempEnd);
+				set_temp_result(&result, &tempStart, &temp_result);
 			}
-			free(result);
-			i = ft_strlen(tempResult);
-			result = ft_own_strjoin(tempResult, tempEnd);
+			rest_while(&tempEnd, &i, &result, &temp_result);
 		}
-		else
-			i++;
+		i++;
 	}
-	return result;
+	return (result);
 }
 
-char * without_quote(char * cmd)
+char	*without_quote(char *cmd)
 {
-	int i;
-	char *result;
-	char *start;
-	char *end;
+	int		i;
+	char	*result;
+	char	*start;
+	char	*end;
 
 	result = ft_strdup(cmd);
 	i = 0;
 	start = NULL;
 	end = NULL;
-
 	while (result[i])
 	{
 		if (((result[i] == '\'' && in_doublequote(cmd, i) == 0)
-			|| (result[i] == '"' && in_singlequote(cmd, i) == 0)))
+				|| (result[i] == '"' && in_singlequote(cmd, i) == 0)))
 		{
 			start = ft_substr(result, 0, i);
 			end = ft_substr(result, i + 1, ft_strlen(result) - i);
@@ -183,13 +215,12 @@ char * without_quote(char * cmd)
 		else
 			i++;
 	}
-	return result;
+	return (result);
 }
 
-
-void without_quote_thing(char ** thing)
+void	without_quote_thing(char **thing)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strdup(*thing);
 	free(*thing);
@@ -197,10 +228,10 @@ void without_quote_thing(char ** thing)
 	free(temp);
 }
 
-void without_quote_args(t_cmd *env)
+void	without_quote_args(t_cmd *env)
 {
-	int i;
-	char *temp;
+	int		i;
+	char	*temp;
 
 	temp = NULL;
 	i = 0;
