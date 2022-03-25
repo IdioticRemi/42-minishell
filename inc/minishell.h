@@ -83,7 +83,25 @@ size_t	ft_max(size_t a, size_t b);
 char	*without_quote(char *cmd);
 void	without_quote_args(t_cmd *env);
 int		in_doublequote(char *cmd, int index);
-
+int		in_singlequote(char *cmd, int index);
+char	*heredoc_c(char **end, t_cmd *stru, char *final_line);
+char	**ft_realloc(char **str, char *value);
+char	*get_next(char *cmd, int index);
+void	cut_re(int *mode, char **path, int *i, char *cmd);
+int		check_is_var(char *result, int i);
+void	set_start(char **result, int i, char **tempStart);
+void	rest_while(char **tempEnd, int *i, char **result, char **tempResult);
+void	set_temp_end(char **result, int i, char **tempEnd);
+void	set_temp_result(char **result, char **tempStart, char **tempResult);
+void	reset_temp(char *start, char *end);
+int		get_next_space(char *cmd, int index);
+char	*ft_own_strjoin(char *s1, char *s2);
+char	*get_first_quotes(char *cmd_b);
+void	cut_var(char *brut, int i, char **result, char **tempEnd);
+void	free_multiple(char *one, char *two, char *tree, char *four);
+void	fill_err(t_cmd *cmd);
+char	*skip_spaces(char *cmd_b);
+int		white_spaces(char *str);
 // Execution
 
 void	ft_exec(t_cmd *cmd);
