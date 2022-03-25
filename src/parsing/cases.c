@@ -61,6 +61,13 @@ void	fill_err(t_cmd *cmd)
 		cmd->argv[1] = NULL;
 		cmd->argv[0][0] = 1;
 		cmd->argv[0][1] = 0;
+		cmd->heredoc = 0;
+		if (cmd->in)
+			free(cmd->in);
+		cmd->in = NULL;
+		if (cmd->out)
+			free(cmd->out);
+		cmd->out = NULL;
 		cmd->next = NULL;
 }
 
@@ -89,7 +96,7 @@ void	fill_cmd(char *cmd_b, t_cmd *cmd)
 	cmd_true = with_var(temp, NULL, NULL, 0);
 	err[0] = for_rre(cmd_true, cmd);
 	err[1] = for_re(cmd_true, cmd);
-	if (err[0] == -1 && err[1] == -1)
+	if ((err[0] == -1 && err[1] == -1) || err[0] == -2)
 	{
 		fill_err(cmd);
 		free_multiple(cmd_true, temp, NULL, NULL);

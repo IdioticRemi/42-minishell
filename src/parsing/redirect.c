@@ -107,6 +107,8 @@ char * heredoc_c(char **end, t_cmd *stru)
 		temp = without_quote(end[i]);
         if (ft_strncmp(line, temp, ft_max(ft_strlen(line), ft_strlen(end[i]))) == 0)
             i++;
+        if (!end[i] && !final_line)
+            final_line = ft_strdup("");
         if (end[i])
             bool_quote = checkHereDocQuote(end[i]);
         else
@@ -116,10 +118,9 @@ char * heredoc_c(char **end, t_cmd *stru)
         free(line);
 		free(temp);
     }
-    stru->heredoc = 1;
+    
     ft_afree((void **)end);
-    if (!final_line)
-        return(ft_strdup(""));
+    stru->heredoc = 1;
     return (final_line);
 }
 
@@ -281,12 +282,14 @@ int for_rre(char *cmd, t_cmd *stru)
         i++;
     }
     if (heredoc)
+    {
         temp = heredoc_c(heredoc, stru);
-    if (temp != NULL)
+        if (!temp)
+            return (-2);
         stru->in = temp;
+    }
     else
         stru->in = path;
-    
     stru->append = mode;
     return (mode);
 }
