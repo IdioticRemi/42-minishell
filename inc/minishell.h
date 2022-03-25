@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/25 03:02:58 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 03:26:23 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	ft_check_pipe(char *line);
 
 t_cmd	*parsing(char *line);
 
-int		for_re(char *cmd, t_cmd *stru);
-int		for_rre(char *cmd, t_cmd *stru);
+int		for_re(char *cmd, t_cmd *stru, char *path, int mode);
+int		for_rre(char *cmd, t_cmd *stru, char *path, int mode);
 void	throw_cases(char *cmd_b, t_cmd *cmd);
 char	*conv_redir(char *cmd);
 char	**conv_args(char *b_cmd);

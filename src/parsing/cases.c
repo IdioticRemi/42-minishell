@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:09:42 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/22 17:43:52 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 03:24:56 by pdeshaye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	fill_cmd(char *cmd_b, t_cmd *cmd)
 	temp = skip_spaces(ft_strdup(cmd_b));
 	free(cmd_b);
 	cmd_true = with_var(temp, NULL, NULL, 0);
-	err[0] = for_rre(cmd_true, cmd);
-	err[1] = for_re(cmd_true, cmd);
+	err[0] = for_rre(cmd_true, cmd, NULL, 0);
+	err[1] = for_re(cmd_true, cmd, NULL, 0);
 	if ((err[0] == -1 && err[1] == -1) || err[0] == -2)
 	{
 		fill_err(cmd);
