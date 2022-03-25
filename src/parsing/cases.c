@@ -56,19 +56,19 @@ char	*skip_spaces(char *cmd_b)
 
 void	fill_err(t_cmd *cmd)
 {
-		cmd->argv = malloc(2 * sizeof(char *));
-		cmd->argv[0] = malloc(2);
-		cmd->argv[1] = NULL;
-		cmd->argv[0][0] = 1;
-		cmd->argv[0][1] = 0;
-		cmd->heredoc = 0;
-		if (cmd->in)
-			free(cmd->in);
-		cmd->in = NULL;
-		if (cmd->out)
-			free(cmd->out);
-		cmd->out = NULL;
-		cmd->next = NULL;
+	cmd->argv = malloc(2 * sizeof(char *));
+	cmd->argv[0] = malloc(2);
+	cmd->argv[1] = NULL;
+	cmd->argv[0][0] = 1;
+	cmd->argv[0][1] = 0;
+	cmd->heredoc = 0;
+	if (cmd->in)
+		free(cmd->in);
+	cmd->in = NULL;
+	if (cmd->out)
+		free(cmd->out);
+	cmd->out = NULL;
+	cmd->next = NULL;
 }
 
 void	free_multiple(char *one, char *two, char *tree, char *four)
