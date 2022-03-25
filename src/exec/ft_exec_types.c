@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:54:32 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/25 00:59:25 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 01:20:15 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static int	ft_exec_builtin(t_cmd *cmd, t_env **env)
 		return(ft_env(env));
 	else if (ft_strequ(cmd->argv[0], "pwd"))
 		return(ft_pwd());
+	else if (ft_strequ(cmd->argv[0], "cd"))
+		return(ft_cd(cmd->argv, env));
 	return (1);
 }
 
@@ -47,6 +49,7 @@ static void	ft_exec_cmd(t_cmd *cmd, t_env **env)
 	dup2(STDERR_FILENO, STDOUT_FILENO);
 	printf("Command '%s' not found.\n", cmd->argv[0]);
 	dup2(g_shell->stdout, STDOUT_FILENO);
+	free(path);
 	exit(1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 19:06:46 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/23 19:39:16 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/24 16:20:49 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	ft_replace(t_env **env, char *key, char *new_val)
 	if (!tmp)
 		return ;
 	free(tmp->value);
+	free(key);
 	tmp->value = new_val;
 }
 
