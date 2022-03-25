@@ -6,13 +6,13 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:09:42 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 16:22:07 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 00:16:18 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char **argv)
+int	ft_echo(char **argv)
 {
 	int	i;
 	int	full_n;
@@ -41,4 +41,5 @@ void	ft_echo(char **argv)
 		write(1, " ", (argv[i] != NULL));
 	}
 	write(1, "\n", newline);
+	return (0);
 }

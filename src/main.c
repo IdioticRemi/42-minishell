@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/24 16:40:29 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/25 00:54:28 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(int ac, char **argv, char **env)
 {
 	char	*shlvl;
 
-	(void) ac;
 	(void) argv;
 	g_shell = malloc(sizeof(t_shell));
 	if (!g_shell)
@@ -67,6 +66,7 @@ int	main(int ac, char **argv, char **env)
 	g_shell->stdin = dup(STDIN_FILENO);
 	g_shell->stdout = dup(STDOUT_FILENO);
 	g_shell->stderr = dup(STDERR_FILENO);
+	g_shell->status = 0;
 	g_shell->pid_count = 0;
 	g_shell->pids = NULL;
 	g_shell->env = ft_parse_env(env);
@@ -74,7 +74,7 @@ int	main(int ac, char **argv, char **env)
 		ft_clean_exit();
 	shlvl = ft_get_env(g_shell->env, "SHLVL");
 	ft_set_env(&g_shell->env, ft_strdup("SHLVL"), ft_itoa(
-			ft_atoi(shlvl) + 1));
+			ft_atoi(shlvl) + 1 + (0 * ac)));
 	free(shlvl);
 	ft_termios_init();
 	signal(SIGQUIT, ft_signal);
