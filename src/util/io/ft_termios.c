@@ -16,17 +16,13 @@ void	ft_termios_init(void)
 {
 	struct termios	attrs;
 
+	tcgetattr(STDIN_FILENO, &g_shell->term_save);
 	tcgetattr(STDIN_FILENO, &attrs);
-	g_shell->c_lflag = attrs.c_lflag;
-	attrs.c_lflag = ECHO;
+	attrs.c_lflag = (ECHO | ICANON | ISIG);
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &attrs);
 }
 
 void	ft_termios_revert(void)
 {
-	struct termios	attrs;
-
-	tcgetattr(STDIN_FILENO, &attrs);
-	attrs.c_lflag = g_shell->c_lflag;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &attrs);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell->term_save);
 }

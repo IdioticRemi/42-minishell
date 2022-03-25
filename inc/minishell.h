@@ -32,15 +32,15 @@ typedef struct s_env
 }	t_env;
 
 typedef struct s_shell {
-	int			stdin;
-	int			stdout;
-	int			stderr;
-	int			status;
+	int				stdin;
+	int				stdout;
+	int				stderr;
+	int				status;
 
-	tcflag_t	c_lflag;
-	int			pid_count;
-	int			*pids;
-	t_env		*env;
+	struct termios	term_save;
+	int				pid_count;
+	int				*pids;
+	t_env			*env;
 }	t_shell;
 
 typedef struct s_cmd {

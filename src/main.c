@@ -27,7 +27,7 @@ static void	ft_prompt(void)
 	line = readline("\033[36mMINISHELL\033[0m> ");
 	if (!line)
 	{
-		printf("exit\n");
+		ft_putstr_fd("exit\n", 1);
 		ft_clean_exit();
 	}
 	add_history(line);
@@ -45,14 +45,15 @@ static void	ft_signal(int sig)
 		write(1, "\n", 1);
 		return ;
 	}
-	empty = ft_calloc(1, 1);
-	if (sig == SIGQUIT)
-		return ;
-	write(1, "\n", 1);
-	rl_replace_line(empty, 0);
+	if (sig == SIGINT)
+	{
+		empty = ft_calloc(1, 1);
+		write(1, "\n", 1);
+		rl_replace_line(empty, 0);
+		free(empty);
+	}
 	rl_on_new_line();
 	rl_redisplay();
-	free(empty);
 }
 
 int	main(int ac, char **argv, char **env)
