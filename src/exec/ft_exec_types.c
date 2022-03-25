@@ -15,21 +15,21 @@
 static int	ft_exec_builtin(t_cmd *cmd, t_env **env)
 {
 	if (cmd->argv[0][0] == 1)
-		return(ft_null());
+		return (ft_null());
 	else if (ft_strequ(cmd->argv[0], "exit"))
-		return(ft_exit(cmd));
+		return (ft_exit(cmd));
 	else if (ft_strequ(cmd->argv[0], "echo"))
-		return(ft_echo(cmd->argv));
+		return (ft_echo(cmd->argv));
 	else if (ft_strequ(cmd->argv[0], "export"))
-		return(ft_export(cmd->argv, env));
+		return (ft_export(cmd->argv, env));
 	else if (ft_strequ(cmd->argv[0], "unset"))
-		return(ft_unset(cmd->argv, env));
+		return (ft_unset(cmd->argv, env));
 	else if (ft_strequ(cmd->argv[0], "env"))
-		return(ft_env(env));
+		return (ft_env(env));
 	else if (ft_strequ(cmd->argv[0], "pwd"))
-		return(ft_pwd());
+		return (ft_pwd());
 	else if (ft_strequ(cmd->argv[0], "cd"))
-		return(ft_cd(cmd->argv, env));
+		return (ft_cd(cmd->argv, env));
 	return (1);
 }
 
