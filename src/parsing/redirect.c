@@ -26,7 +26,7 @@ int	for_re(char *cmd, t_cmd *stru, char *path, int mode)
 		if (cmd[i] == '>' && in_quote(cmd, i, 0) == 0)
 		{
 			cut_re(&mode, &path, &i, cmd);
-			is_open = open(path, O_WRONLY | O_CREAT, 0777);
+			is_open = ft_open(mode, path);
 			if (is_open < 0)
 			{
 				ft_putstr_fd(path, 2);
@@ -82,37 +82,38 @@ int	rre_cut2(char *cmd, char ***heredoc, int *i, char *path)
 		free(path);
 	if (cmd[*i + 1] && cmd[*i + 1] == '<')
 	{
-		*heredoc = ft_realloc(*heredoc, get_next(cmd, *i + 1));
+		*heredoc = ft_realloc(*heredoc, get_next(cmd, *i + 1, 1));
 		*i += 2;
 		return (1);
 	}
 	return (0);
 }
 
-int	for_rre(char *cmd, t_cmd *stru, char *path, int mode)
+int	for_rre(char *cmd, t_cmd *stru, char *notVar, int mode)
 {
 	int		i;
 	int		is_open;
 	char	**heredoc;
 	char	*temp;
+	char	*path;
 
-	i = 0;
+	path = NULL;
+	i = -1;
 	heredoc = NULL;
 	temp = NULL;
 	is_open = -1;
-	while (cmd[i])
+	while (cmd[++i])
 	{
 		if (is_open > 0)
 			close(is_open);
 		if (cmd[i] == '<' && in_quote(cmd, i, 0) == 0)
 		{
-			if (rre_cut2(cmd, &heredoc, &i, path) == 1)
+			if (rre_cut2(notVar, &heredoc, &i, path) == 1)
 				continue ;
-			temp = get_next(cmd, i);
+			temp = get_next(cmd, i, 0);
 			if (cut_rre(&mode, &path, &is_open, &temp) == -1)
 				return (-1);
 		}
-		i++;
 	}
 	return (end_rre(heredoc, stru, path, mode));
 }

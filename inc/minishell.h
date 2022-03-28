@@ -72,7 +72,7 @@ void	ft_check_pipe(char *line);
 t_cmd	*parsing(char *line);
 
 int		for_re(char *cmd, t_cmd *stru, char *path, int mode);
-int		for_rre(char *cmd, t_cmd *stru, char *path, int mode);
+int		for_rre(char *cmd, t_cmd *stru, char *notVar, int mode);
 void	throw_cases(char *cmd_b, t_cmd *cmd);
 char	*conv_redir(char *cmd);
 char	**conv_args(char *b_cmd);
@@ -87,7 +87,7 @@ int		in_doublequote(char *cmd, int index);
 int		in_singlequote(char *cmd, int index);
 char	*heredoc_c(char **end, t_cmd *stru, char *final_line);
 char	**ft_realloc(char **str, char *value);
-char	*get_next(char *cmd, int index);
+char	*get_next(char *cmd, int index, int heredoc);
 void	cut_re(int *mode, char **path, int *i, char *cmd);
 int		check_is_var(char *result, int i);
 void	set_start(char **result, int i, char **tempStart);
@@ -98,11 +98,12 @@ void	reset_temp(char *start, char *end);
 int		get_next_space(char *cmd, int index);
 char	*ft_own_strjoin(char *s1, char *s2);
 char	*get_first_quotes(char *cmd_b);
-void	cut_var(char *brut, int i, char **result, char **tempEnd);
+void	cut_var(int i, char **result, char **tempEnd);
 void	free_multiple(char *one, char *two, char *tree, char *four);
 void	fill_err(t_cmd *cmd);
 char	*skip_spaces(char *cmd_b);
 int		white_spaces(char *str);
+int		ft_open(int mode, char *path);
 // Execution
 
 void	ft_exec(t_cmd *cmd);

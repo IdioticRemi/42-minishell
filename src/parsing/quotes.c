@@ -15,28 +15,25 @@
 char	*without_quote(char *cmd)
 {
 	int		i;
+	int		j;
 	char	*result;
-	char	*start;
-	char	*end;
 
-	result = ft_strdup(cmd);
+	result = malloc(sizeof(char) * (ft_strlen(cmd) + 1));
 	i = 0;
-	start = NULL;
-	end = NULL;
-	while (result[i])
+	j = 0;
+	while (cmd[i])
 	{
-		if (((result[i] == '\'' && in_doublequote(cmd, i) == 0)
-				|| (result[i] == '"' && in_singlequote(cmd, i) == 0)))
+		if (((cmd[i] == '\'' && in_doublequote(cmd, i) == 0)
+				|| (cmd[i] == '"' && in_singlequote(cmd, i) == 0)))
 		{
-			start = ft_substr(result, 0, i);
-			end = ft_substr(result, i + 1, ft_strlen(result) - i);
-			free(result);
-			result = ft_own_strjoin(start, end);
-			i = 0;
-		}
-		else
 			i++;
+			continue ;
+		}
+		result[j] = cmd[i];
+		j++;
+		i++;
 	}
+	result[j] = '\0';
 	return (result);
 }
 
@@ -66,4 +63,15 @@ void	without_quote_args(t_cmd *env)
 		without_quote_thing(&env->out);
 	if (env->in)
 		without_quote_thing(&env->in);
+}
+
+int	ft_open(int mode, char *path)
+{
+	int	is_open;
+
+	if (mode == 2)
+		is_open = open(path, O_WRONLY | O_APPEND | O_CREAT, 0777);
+	else
+		is_open = open(path, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	return (is_open);
 }

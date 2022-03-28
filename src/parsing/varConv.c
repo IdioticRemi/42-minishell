@@ -53,18 +53,18 @@ char	*get_first_quotes(char *cmd_b)
 	int	i;
 
 	i = 0;
-	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '\n'
+	while (cmd_b[i] && cmd_b[i] != ' ' && cmd_b[i] != '$' && cmd_b[i] != '\n'
 		&& in_quote(cmd_b, i, 1) == 0)
 		i++;
 	return (ft_substr(cmd_b, 0, i));
 }
 
-void	cut_var(char *brut, int i, char **result, char **tempEnd)
+void	cut_var(int i, char **result, char **tempEnd)
 {
 	*tempEnd = ft_substr(*result, get_next_space(*result, \
 		i + 1), ft_strlen(*result) - get_next_space(*result, i));
 	free(*result);
-	*result = get_first_quotes(brut + i + 1);
+	*result = get_first_quotes(*result + i + 1);
 }
 
 char	*with_var(char *brut, char *tempStart, char *tempEnd, int i)
@@ -86,7 +86,7 @@ char	*with_var(char *brut, char *tempStart, char *tempEnd, int i)
 			}
 			else
 			{
-				cut_var(brut, i, &result, &tempEnd);
+				cut_var(i, &result, &tempEnd);
 				set_temp_result(&result, &tempStart, &temp_result);
 			}
 			rest_while(&tempEnd, &i, &result, &temp_result);

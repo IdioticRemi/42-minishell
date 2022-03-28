@@ -85,12 +85,12 @@ char	*conv_redir(char *cmd)
 	return (new);
 }
 
-char	*get_next(char *cmd, int index)
+char	*get_next(char *cmd, int index, int heredoc)
 {
 	int	i;
 	int	start;
 
-	start = index + 1;
+	start = index + 1 + heredoc;
 	if (!cmd[start])
 		return (NULL);
 	while (cmd[start] == ' ')
@@ -108,12 +108,12 @@ void	cut_re(int *mode, char **path, int *i, char *cmd)
 	if (cmd[*i + 1] && cmd[*i + 1] == '>')
 	{
 		*mode = 2;
-		*path = get_next(cmd, *i + 1);
+		*path = get_next(cmd, *i + 1, 0);
 		(*i)++;
 	}
 	else
 	{
 		*mode = 1;
-		*path = get_next(cmd, *i);
+		*path = get_next(cmd, *i, 0);
 	}
 }
