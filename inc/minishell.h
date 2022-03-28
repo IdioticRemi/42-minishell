@@ -6,7 +6,7 @@
 /*   By: pdeshaye <pdeshaye@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:30 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/25 03:26:23 by pdeshaye         ###   ########.fr       */
+/*   Updated: 2022/03/28 14:35:22 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <termios.h>
+# include <errno.h>
 
 typedef struct s_env
 {		
@@ -107,7 +108,7 @@ int		white_spaces(char *str);
 void	ft_exec(t_cmd *cmd);
 
 //void	ft_exec_builtin(t_cmd *cmd, t_env **env);
-pid_t	ft_exec_single(t_cmd *cmd, t_env **env);
+pid_t	ft_exec_single(t_cmd *cmd, t_env **env, int id);
 pid_t	ft_exec_pipe(t_cmd *cmd, t_env **env);
 pid_t	ft_exec_heredoc(t_cmd *cmd);
 void	ft_exec_dup(t_cmd *cmd);

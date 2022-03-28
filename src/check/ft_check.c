@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 14:42:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:27:24 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/28 13:43:04 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,11 @@
 
 void	ft_check(char *line)
 {
-	ft_check_quotes(line);
+	size_t	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (i < ft_strlen(line) - 1)
+		ft_check_quotes(line);
 }

@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/25 00:54:28 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/28 14:25:28 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ static void	ft_signal(int sig)
 	{
 		while (--g_shell->pid_count)
 			kill(g_shell->pids[g_shell->pid_count], sig);
-		write(1, "\n", 1);
+		if (sig == SIGQUIT)
+			write(1, "Quit\n", 5);
+		else
+			write(1, "\n", 1);
 		return ;
 	}
 	if (sig == SIGINT)
@@ -71,8 +74,6 @@ int	main(int ac, char **argv, char **env)
 	g_shell->pid_count = 0;
 	g_shell->pids = NULL;
 	g_shell->env = ft_parse_env(env);
-	if (!g_shell->env)
-		ft_clean_exit();
 	shlvl = ft_get_env(g_shell->env, "SHLVL");
 	ft_set_env(&g_shell->env, ft_strdup("SHLVL"), ft_itoa(
 			ft_atoi(shlvl) + 1 + (0 * ac)));
