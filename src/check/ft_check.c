@@ -14,11 +14,5 @@
 
 void	ft_check(char *line)
 {
-	size_t	i;
-
-	i = 0;
-	while (line[i] && line[i] == ' ')
-		i++;
-	if (i < ft_strlen(line) - 1)
-		ft_check_quotes(line);
+	ft_check_quotes(line);
 }

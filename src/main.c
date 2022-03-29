@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/28 14:25:28 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 11:26:00 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_clean_exit(void)
 static void	ft_prompt(void)
 {
 	char	*line;
+	size_t	i;
 
 	line = readline("\033[36mMINISHELL\033[0m> ");
 	if (!line)
@@ -30,8 +31,15 @@ static void	ft_prompt(void)
 		ft_putstr_fd("exit\n", 1);
 		ft_clean_exit();
 	}
-	add_history(line);
-	ft_check(line);
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (line[0] && i < ft_strlen(line) - 1)
+	{
+		dprintf(2, "'%s' (%lu =?= %lu)\n", line, i, ft_strlen(line));
+		add_history(line);
+		ft_check(line);
+	}
 }
 
 static void	ft_signal(int sig)
