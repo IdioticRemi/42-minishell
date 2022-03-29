@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 11:15:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/29 11:26:00 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 11:26:35 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static void	ft_prompt(void)
 		i++;
 	if (line[0] && i < ft_strlen(line) - 1)
 	{
-		dprintf(2, "'%s' (%lu =?= %lu)\n", line, i, ft_strlen(line));
 		add_history(line);
 		ft_check(line);
 	}
