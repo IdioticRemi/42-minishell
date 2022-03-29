@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 15:10:58 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/02/09 15:18:29 by tjolivea         ###   ########.fr       */
+/*   Updated: 2022/03/29 13:51:21 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ char	*get_first_quotes(char *cmd_b)
 
 void	cut_var(int i, char **result, char **tempEnd)
 {
+	char	*tmp;
+
 	*tempEnd = ft_substr(*result, get_next_space(*result, \
 		i + 1), ft_strlen(*result) - get_next_space(*result, i));
-	free(*result);
+	tmp = *result;
 	*result = get_first_quotes(*result + i + 1);
+	free(tmp);
 }
 
 char	*with_var(char *brut, char *tempStart, char *tempEnd, int i)

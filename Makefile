@@ -18,7 +18,7 @@ OBJS	= $(addprefix $(OBJ_DIR), $(__SRCS:.c=.o))
 # Compile
 CC		= clang
 
-CFLAGS	= -Wall -Werror -Wextra -O3 -g3
+CFLAGS	= -Wall -Werror -Wextra -O3
 INCLUDE	= -I $(INC_DIR)
 LIBS	= -lreadline -L /Users/$(USER)/.brew/opt/readline/lib -I /Users/$(USER)/.brew/opt/readline
 

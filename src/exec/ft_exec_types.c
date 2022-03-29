@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 10:54:32 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/28 14:59:13 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/29 13:47:16 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	ft_exec_cmd(t_cmd *cmd, t_env **env)
 		printf("Command '%s' not found.\n", cmd->argv[0]);
 	dup2(g_shell->stdout, STDOUT_FILENO);
 	free(path);
+	ft_afree((void **) _env);
 	if (errno == 2 || errno == EACCES)
 		exit((errno == 2) * 127 + (errno == EACCES) * 126);
 	exit(1);
