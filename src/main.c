@@ -39,6 +39,8 @@ static void	ft_prompt(void)
 		add_history(line);
 		ft_check(line);
 	}
+	else
+		free(line);
 }
 
 static void	ft_signal(int sig)

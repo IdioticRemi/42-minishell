@@ -36,7 +36,7 @@ static int	ft_chdir(char *path)
 	{
 		if (stat(path, &s) == -1)
 		{
-			ft_err("no such file or directory.", path, 1);
+			ft_err("no such file or directory.", path, 127);
 			return (127);
 		}
 		else if (!(s.st_mode & S_IRUSR))

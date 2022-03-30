@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 19:10:14 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/28 13:26:23 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/30 17:23:21 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	ft_export_print(t_env **env)
 	while (++i < len - 1)
 	{
 		j = -1;
-		while (++j + i < len - 1)
+		while (++j + i < len)
 		{
 			if (ft_strncmp(keys[i], keys[i + j], -1) > 0)
 			{

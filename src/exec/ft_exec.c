@@ -6,7 +6,7 @@
 /*   By: tjolivea <tjolivea@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/01 12:29:55 by tjolivea          #+#    #+#             */
-/*   Updated: 2022/03/28 14:30:11 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2022/03/30 17:32:46 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,16 @@ static void	ft_exec_wait(t_cmd *cmd, size_t cmdsize)
 	free(g_shell->pids);
 }
 
+static void	ft_update_env(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while(cmd->argv[i] && cmd->argv[i + 1])
+		i++;
+	ft_set_env(&g_shell->env, ft_strdup("_"), ft_strdup(cmd->argv[i]));
+}
+
 void	ft_exec(t_cmd *cmd)
 {
 	t_cmd	*save;
@@ -63,8 +73,10 @@ void	ft_exec(t_cmd *cmd)
 	while (++i < cmdsize)
 	{
 		g_shell->pids[i] = ft_exec_router(cmd, &g_shell->env, i);
-		cmd = cmd->next;
+		if (i != cmdsize - 1)
+			cmd = cmd->next;
 	}
+	ft_update_env(cmd);
 	ft_exec_wait(save, cmdsize);
 	ft_free_cmd(save);
 	dup2(g_shell->stdout, STDOUT_FILENO);

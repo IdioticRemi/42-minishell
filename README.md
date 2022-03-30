@@ -8,11 +8,10 @@ TODO LIST:
 - [x] Make variables work in the shell ✅
 - [x] Fix ^C showing in terminal (look at termios/caps) ✅
 - [x] Increase SHLVL variable when starting the shell ✅
-- [ ] Add functionnality to input things into the shell via STDIN (e.g.: <b>echo "ls -la" | ./minishell</b>)
-- [ ] Fix norminette
+- [x] Fix norminette ✅
 
 FINAL:
-- [ ] Verify ALL leaks
-- [ ] Test a lot of stuff
-- [ ] Check correction subject to make sure everything is fine
-- [ ] Ready for review
+- [x] Verify ALL leaks ✅
+- [x] Test a lot of stuff ✅
+- [x] Check correction subject to make sure everything is fine ✅
+- [x] Ready for review ✅
